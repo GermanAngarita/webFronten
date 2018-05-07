@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col">
+    <div class="card">
+        <div class="card-body text-center">
+          <i class="fas fa-wrench fa-10x text-muted"></i> <br>
+          <h5 class="card-title text-center">Mantenimientos</h5>
+          <p class="card-text text-center">Utilice este apartado para cargar los Mantenimientos</p>
+          <button class="btn btn-primary" (click)="goTo()">
+              Cargar datos
+          </button>
+        </div>
+        <ngb-progressbar  type="primary" [value]="100" [max]="100" height="10px"></ngb-progressbar>
+      </div>
+  </div>
+  <div class="col">
+    <div class="card">
+        <div class="card-body text-center">
+          <i class="fas fa-stethoscope fa-10x text-muted"></i> <br>
+          <h5 class="card-title text-center">Clinicas de servicio</h5>
+          <p class="card-text text-center">
+            Utilice este apartado para cargar toda la información de las clínicas de servicio
+          </p>
+          <button class="btn btn-primary">
+            Cargar datos
+          </button>
+          
+        </div>
+        <ngb-progressbar  type="primary" [value]="100" [max]="100" height="10px"></ngb-progressbar>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,204 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">
+      {{user.group}} <small>Vehicles In Operation</small>
+    </h5>
+    <div class="row" *ngIf="filterDealer">
+      <div class="col-lg-12">
+        <p><strong>Filter by Dealer</strong></p>
+      </div>
+      <div class="col-lg-3" *ngFor="let de of dealers">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="de.select" (change)="setFilterDealer()">
+            <label for="" class="form-check-label">{{de.d_cod}} <small>{{de.d_subname}}</small></label>
+        </div>
+      </div>
+    </div><br *ngIf="filterDealer">
+    <div class="row" *ngIf="filterYear">
+      <div class="col-lg-12">
+        <p><strong>Filter by Year</strong></p>
+      </div>
+      <div class="col-lg-3">
+          <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="selectAllYear" (change)="setFilterAllYear(selectAllYear)">
+              <label for="" class="form-check-label">Select All Years</label>
+          </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" *ngFor="let y of year">
+          <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="y.select" (change)="setFilterYear()">
+              <label for="" class="form-check-label">{{y.year}}</label>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="vFilterModel">
+        <div class="row">
+            <div class="col-lg-12">
+                <hr>
+                <strong>Filter by Model</strong>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="selectAllModel" (change)="setFilterAllModel(selectAllModel)">
+                    <label for="" class="form-check-label">Select All Model</label>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" *ngFor="let m of model">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="m.select" (change)="setFilterModel()">
+                    <label for="" class="form-check-label">{{m.model}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="vFilterWarranty">
+        <div class="row">
+            <div class="col-lg-12">
+                <hr>
+                <strong>Filter by StatusWarranty</strong>
+            </div>
+            <div class="col-lg-3" *ngFor="let s of statusWarranty">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="s.select" (change)="setFilterUw()">
+                    <label for="" class="form-check-label">{{s.status}}</label>
+                </div>
+            </div>
+        </div>
+    </div> <br *ngIf="vFilterWarranty">
+    <div class="row">
+      <div class="col-lg-12">
+        <button class="btn-outline-secondary btn btn-sm" (click)="filterDealer=!filterDealer">Filter by Dealer</button>
+        <button class="btn-outline-secondary btn btn-sm" (click)="filterYear=!filterYear">Filter by Year</button>
+        <button class="btn btn-sm btn-outline-secondary" (click)="vFilterModel=!vFilterModel">Filter by Model</button>
+        <button class="btn btn-sm btn-outline-secondary" (click)="vFilterWarranty=!vFilterWarranty">Filter by Warranty Status</button>
+        <button class="btn btn-sm btn-outline-primary" (click)="getData()">Generate Report</button>
+      </div>
+    </div>
+  </div>
+</div> <br>
+
+<div class="card" *ngIf="typeUse[0]">
+    <div class="card-body">
+        <h5 class="card-title">
+           VIO Report of {{filter.uw}} <small> {{today| date:'EEEE, dd MMMM y'}} </small>
+           <button class="btn btn-sm btn-primary float-right" (click)="getReportExcel()" >
+               <i class="fas fa-file-excel"></i> Exports to Excel
+           </button>
+        </h5>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body max-height">
+                        <div class="card-title">
+                            <strong>Total by Year Model</strong>
+                        </div>
+                        <ngx-charts-advanced-pie-chart
+                        [scheme]="AdvancedPieChart"
+                        [results]="totalByYear"
+                        [gradient]="gradient"
+                        (select)="onSelect($event)">
+                        </ngx-charts-advanced-pie-chart>
+                    </div>
+                </div>    
+            </div>
+        </div> <br>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <strong>Total by Use Type</strong>
+                        </div>
+                        <ngx-charts-bar-horizontal
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [results]="typeUse"
+                        [gradient]="gradient"
+                        [xAxis]="showXAxis"
+                        [yAxis]="showYAxis"
+                        [legend]="showLegend"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel"
+                        (select)="onSelect($event)">
+                        </ngx-charts-bar-horizontal>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <strong>Top 5 Dealer</strong>
+                        </div>
+                        <ngx-charts-pie-chart
+                        [view]="view"
+                        [scheme]="colorSchemePie"
+                        [results]="totalByCl"
+                        [legend]="true"
+                        [labels]="true"
+                        (select)="onSelect($event)">
+                        </ngx-charts-pie-chart>
+                    </div>
+                </div>
+            </div>
+        </div> <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <strong>Top Model</strong>
+                        </div>
+                        <div class="row text-center">
+                            <ngx-charts-pie-grid
+                            [view]="viewGridPie"
+                            [scheme]="gridPieChart"
+                            [results]="totalByModel"
+                            (select)="onSelect($event)">
+                            </ngx-charts-pie-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><br>
+        <div class="row max-height">
+            <div class="col-lg-12">
+                    <div class="card-title">
+                            <strong>Origin</strong>
+                        </div>
+                <ngx-charts-number-card
+                [scheme]="colorNumberCard"
+                [bandColor]="bandColor"
+                [results]="totalByFrom"
+                (select)="onSelect($event)">
+                </ngx-charts-number-card>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body font-weight-light text-justify text-sm">
+                        <strong>Data Include From: Dealers: </strong> 
+                        <span *ngFor="let d of filter?.dealer">
+                           <span class="text-uppercase">{{d}}, </span>
+                        </span>
+                        <strong>Models: </strong>
+                        <span *ngFor="let m of filter?.model">
+                            {{m}}, 
+                        </span>
+                        <strong>Years Model: </strong>
+                        <span *ngFor="let y of filter?.year">{{y}}, </span>
+                        <strong>KMC: </strong> Korea
+                        <strong>CKD KMC: </strong> Ecuador
+                        <strong>KMM: </strong> Mexico
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

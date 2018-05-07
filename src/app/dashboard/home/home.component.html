@@ -1,0 +1,82 @@
+<!-- <br>
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-lg-2">
+        <nav class="nav flex-column nav-pills">
+            <a class="nav-link text-uppercase" routerLinkActive="active" routerLink="general" placement="right" ngbTooltip="Report">
+              <i class="fas fa-chart-bar"></i> REPORT
+            </a>
+            <a class="nav-link text-uppercase" routerLinkActive="active" routerLink="yearModel" placement="right" ngbTooltip="Billing">
+              <i class="far fa-money-bill-alt"></i> BILLING
+            </a>
+          </nav>
+      </div>
+      <div class="col-lg-10">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+</div> -->
+
+<div class="container-fluid">
+    <div class="row">
+      <div [ngClass]="{'col-lg-2':!menu, 'd-none':menu}">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title text-center display-4 text-primary"><i class="far fa-user-circle"></i></h1>
+            <h5 class="card-title text-center text-capitalize">
+                {{user.name+' '+user.last_name}} <br>
+                <span> <strong>{{user.group}} </strong> {{user.role}}</span>
+            </h5>
+            <p class="card-title text-center">
+                <small >{{user.email}}</small>
+            </p>
+          </div>
+        </div> <br>
+  
+        <div class="list-group">
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" routerLink="general">
+              <i class="fas fa-chart-bar"></i> Report VIO
+          </a>
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" routerLink="yearModel">
+              <i class="far fa-money-bill-alt"></i> Report billing
+          </a>
+          <!-- <a class="list-group-item list-group-item-action" routerLinkActive="active" routerLink="a">
+            <i class="far fa-money-bill-alt"></i> KPI Satisfacción
+          </a> -->
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" routerLink="kasc">
+            <i class="fas fa-chart-line"></i> CRM KPI's
+          </a>
+          <!-- <a class="list-group-item list-group-item-action" routerLinkActive="active" routerLink="c">
+            <i class="far fa-money-bill-alt"></i> Lealtad
+          </a>
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" routerLink="d">
+            <i class="far fa-money-bill-alt"></i> FRFT
+          </a>
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" routerLink="f">
+            <i class="far fa-money-bill-alt"></i> Dealers
+          </a> -->
+        </div> <br>
+  
+        <p class="text-help text-center">
+          <strong>Powered by </strong>  Posventa Importadora | Metrokia S.A <br> <br>
+          <small>
+            <strong>Contacto Soporte</strong>
+            <strong>D</strong> Calle 224 No 9 -60
+            <strong>T</strong> +571 364 9700 ext. 1264
+            <strong>E</strong> mtkingdespos@kia.com.co
+          </small>
+        </p>
+      </div>
+      <div [ngClass]="{'col-lg-10':!menu, 'col-lg-12':menu}">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+    
+    <!-- 
+    
+    <pre>
+      {{user|json}}
+    </pre> -->
+    
+  

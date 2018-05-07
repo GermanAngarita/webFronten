@@ -1,0 +1,68 @@
+<div class="container-fluid">
+  <h5 class="text-capitalize">{{user.role}}
+    <span class="float-right">
+      <i class="fas fa-power-off"></i>
+    </span>
+  </h5>
+  <div class="card-columns">
+    <div class="card" (click)="goTo('dashboard/home')">
+      <div class="card-body">
+        <h5 class="card-title">Reports</h5>
+        <p class="text-center">
+          <i class="fas fa-chart-pie fa-7x"></i>
+        </p>
+      </div>
+    </div>
+    <div class="card" (click)="goTo('dashboard/dealers')">
+      <div class="card-body">
+        <h5 class="card-title">Dealers</h5>
+        <p class="text-center">
+          <i class="fas fa-building fa-7x"></i>
+        </p>
+      </div>
+    </div>
+    <div class="card" (click)="goTo('dashboard/users')">
+      <div class="card-body">
+        <h5 class="card-title">Users </h5>
+        <p class="text-center">
+          <i class="fas fa-users fa-7x"></i>
+        </p>
+      </div>
+    </div>
+    <div class="card" (click)="goTo('dashboard/upload')">
+      <div class="card-body">
+        <h5 class="card-title">Uploads</h5>
+        <p class="text-center">
+          <i class="fas fa-upload fa-7x"></i>
+        </p>
+      </div>
+    </div>
+    <div class="card" (click)="goTo('dashboard/vin')">
+      <div class="card-body">
+        <h5 class="card-title">Vin search</h5>
+        <p class="text-center">
+          <i class="fas fa-search fa-7x"></i>
+        </p>
+      </div>
+    </div>
+    <div class="card" (click)="goTo('dashboard/serviceClinic')">
+      <div class="card-body">
+        <h5 class="card-title">Service clinic</h5>
+        <p class="text-center">
+          <i class="fas fa-stethoscope fa-7x"></i>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div> <br> <br>
+      <p class="text-help text-center">
+          <strong>Powered by </strong>  Posventa Importadora | Metrokia S.A <br>
+          <small>
+            <strong>Contacto Soporte</strong>
+            <strong>D</strong> Calle 224 No 9 -60
+            <strong>T</strong> +571 364 9700 ext. 1264
+            <strong>E</strong> mtkingdespos@kia.com.co
+          </small>
+        </p>
+  </div>
+</div>

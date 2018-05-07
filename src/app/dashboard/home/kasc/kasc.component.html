@@ -1,0 +1,756 @@
+<div class="row">
+ <div class="col">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">
+        <strong class="text-danger text-uppercase">
+          Resultados
+        </strong>
+        CRM
+      </h5>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="">Desde</label> <br>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control form-control-sm" name="dp" [(ngModel)]="fDate" ngbDatepicker #da="ngbDatepicker" placeholder="yyyy-mm-dd">
+              <div class="input-group-append">
+                <button class="btn btn-primary" (click)="da.toggle()" type="button">
+                  <i class="fas fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="">Hasta</label> <br>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control form-control-sm" name="dp" [(ngModel)]="tDate" ngbDatepicker #db="ngbDatepicker" placeholder="yyyy-mm-dd">
+              <div class="input-group-append">
+                <button class="btn btn-primary" (click)="db.toggle()" type="button">
+                  <i class="fas fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col"></div> -->
+        <div class="col">
+          <label for="">Grupo</label>
+          <select name="" id="" class="form-control form-control-sm" [(ngModel)]="dealerSelect" >
+            <option value="all">ALL GROUP</option>
+            <option value="{{g?.group}}" *ngFor="let g of dealerByGroup">{{g?.group}}</option>
+          </select>
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+            <button class="btn btn-primary btn-sm" (click)="setFilter()">Get Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>
+</div> <br>
+<section *ngIf="frftTopOffenders && frftOffenders && frftByDealerTri && frftByDealer?.data && kascGeneral[0] && indicatorSat[0] && kascDealer?.kasc && kacs[0].series[0] && kacs[1].series[0] && loyaltyByDealer.data && loyaltyByDealerTri && kascDetails[0] && revisitDetails[0] && recommend[0] && indicatorSat[1]?.series && dealerScore[0] && dealerScoreColor[0]">
+    <div class="row" *ngIf="kascGeneral[0] && indicatorSat[0]">
+        <div class="col" >
+          <div class="card no-border">
+            <div class="card-body">
+              <h5 class="card-title">
+                Indicadores de Satisfacción <small>KACS, Lealtad y FRFT</small>
+              </h5>
+                <combo-chart-component
+                class="chart-container"
+                [view]="view"
+                [scheme]="comboBarScheme"
+                [colorSchemeLine]="lineChartScheme"
+                [results]="kascGeneral"
+                [animations]="animations"
+                [lineChart]="indicatorSat"
+                [tooltipDisabled]="tooltipDisabled"
+                [yAxisTickFormatting]="yLeftTickFormat"
+                [yLeftAxisScaleFactor]="yLeftAxisScale"
+                [yRightAxisScaleFactor]="yRightAxisScale"
+                [yRightAxisTickFormatting]="yRightTickFormat"
+                [gradient]="true"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="true"
+                [legendTitle]="legendTitle"
+                [showGridLines]="showGridLines"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [showRightYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel"
+                [yAxisLabelRight]="yAxisLabelRight"      
+                (select)="onSelect($event)">
+              </combo-chart-component>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="kascGeneral[0] && indicatorSat[0]">
+        <div class="col">
+          <div class="card no-border" >
+            <div class="card-body">
+                <div class="table-resposive">
+                    <table class="table table-sm">
+                      <thead class="thead-dark">
+                        <tr class="text-uppercase">
+                          <th>periodo</th>
+                          <th>Objetivo</th>
+                          <th *ngFor="let kg of kascGeneral">
+                            {{kg.name}}
+                          </th>
+                        </tr>
+                        
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let kg of indicatorSat">
+                          <td class="text-uppercase">{{kg.name}}</td>
+                          <td>
+                            <span *ngIf="kg.name=='KACS'">
+                              <strong>86%</strong>
+                            </span>
+                            <span *ngIf="kg.name=='FRFT'">
+                              <strong>95%</strong>
+                            </span>
+                            <span *ngIf="kg.name=='LOYALTY'">
+                              <strong>44%</strong>
+                            </span>
+                          </td>
+                          <td *ngFor="let k of kg.series">
+                            <span *ngIf="kg.name=='KACS'">
+                                <span [ngClass]="{'text-ok':k.value>86,'text-urgente':k.value<86}">
+                                    <strong ngbTooltip="{{k.name}}">{{k.value|currency:' ':2}}</strong>
+                                </span>
+                            </span>
+      
+                            <span *ngIf="kg.name=='FRFT'">
+                                <span [ngClass]="{'text-ok':k.value>95,'text-urgente':k.value<95}">
+                                    <strong ngbTooltip="{{k.name}}">{{k.value|currency:' ':2}}</strong>
+                                </span>
+                            </span>
+      
+                            <span *ngIf="kg.name=='LOYALTY'">
+                                <span [ngClass]="{'text-ok':k.value>44,'text-urgente':k.value<44}">
+                                    <strong ngbTooltip="{{k.name}}">{{k.value|currency:' ':2}}</strong>
+                                </span>
+                            </span>
+                            
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card no-border" *ngIf="kascGeneral[0] && indicatorSat[0]">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th class="text-uppercase">Periodo</th>
+                        <th *ngFor="let d of dcsiByDate">{{d.periodo}}  </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr >
+                        <td>Encuestados</td>
+                        <td *ngFor="let d of dcsiByDate">{{d.total}}  </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div> <br><br><br><br><br><br>
+      <div class="row" *ngIf="kascDealer?.kasc">
+        <div class="col" >
+          <div class="card no-border">
+            <div class="card-body">
+              <h5 class="card-title">
+                KACS <small>Satisfaction Customer <span class="badge badge-secondary">{{kascDealer.kasc.length}} Dealers</span></small>
+              </h5>
+              <p class="card-text">
+                ¿Qué tan satisfecho quedó el cliente con el servicio Kia?
+              </p>
+                <ngx-charts-bar-vertical
+                [view]="view"
+                [results]="kascDealer.kasc"
+                [gradient]="gradient"
+                [customColors]="customColor"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel" 
+                (select)="onSelect($event)">
+              </ngx-charts-bar-vertical>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="row" *ngIf="kascDealer?.kasc">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+                <small class="text-muted">
+                    KACS BQ010: Mide el porcentaje de satisfacciòn de los clientes atendidos en posventa. (OBJETIVO 86%)
+                    <span class="tex-right float-right">
+                     <span class="badge badge-primary badge-ok">&nbsp;&nbsp;</span> 100% - 86%
+                     <span class="badge badge-primary badge-pronto">&nbsp;&nbsp;</span> 85,9% - 84%
+                     <span class="badge badge-primary badge-urgente">&nbsp;&nbsp;</span> 83,9% - 0%
+                    </span>
+                  </small>
+                  <br>
+                  <div *ngFor="let d of kascDealerLast" class="text-justify">
+                    <strong>
+                        {{d.date}} 
+                    </strong> <a (click)="d.view=!d.view" class="text-secondary">
+                        <i class="fas fa-eye"></i>
+                      </a><br>
+                    <span *ngFor="let dealer of kascDealer.kasc" class="vertical-text">
+                      <span *ngFor="let c of d.cl">
+                          <i [ngClass]="{'fas':true, 
+                          'fa-circle':true,
+                          'text-ok':c.value>85.9,
+                          'text-pronto':(c.value>83.9 && c.value<86),
+                          'text-urgente':c.value<84
+                          }" *ngIf="c.name==dealer.name">
+                          </i>
+                        </span>
+                      <span class="text-sm" *ngIf="!d.view">
+                        {{dealer.name}}
+                      </span>
+                    </span>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br><br><br><br><br>
+      <div class="row" *ngIf="kacs[0].series[0] && kacs[1].series[0]">
+        <div class="col">
+          <div class="card no-border" >
+            <div class="card-body">
+              <h5 class="card-title">
+                Resultados KACS <small>Periodo actual vs Trimestre</small>
+              </h5>
+              <ngx-charts-line-chart
+              [scheme]="kacsScheme"
+              [view]="view"
+              [results]="kacs"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="true"
+              [roundDomains]="true"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              [autoScale]="true"
+              [curve]="curve"
+              (select)="onSelect($event)">
+            </ngx-charts-line-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br><br><br><br><br>
+      <div class="row" *ngIf="loyaltyByDealer.data">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+              <h5 class="card-title">Lealtad por dealer </h5>
+              <ngx-charts-bar-vertical
+                [view]="view"
+                [results]="loyaltyByDealer.data"
+                [gradient]="gradient"
+                [customColors]="loyaltyByDealer.colors"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="'Lealtad %'"
+                (select)="onSelect($event)">
+              </ngx-charts-bar-vertical>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="loyaltyByDealer.data">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+              <small class="text-muted">
+                Lealtad: Se mide según el resultado de: (Objetivo: 44%) 
+                <br> ¿Qué tan satisfecho quedo con el servicio de Kia?
+                <br> ¿Visitaría este concesionario para el próximo mantenimiento?
+                <br> ¿Recomendaría este taller Kia?
+                <span class="tex-right float-right">
+                  <span class="badge badge-primary badge-ok">&nbsp;&nbsp;</span> 100% - 44%
+                  <span class="badge badge-primary badge-pronto">&nbsp;&nbsp;</span> 43,9% - 40%
+                  <span class="badge badge-primary badge-urgente">&nbsp;&nbsp;</span> 39,9% - 0%
+                </span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="loyaltyByDealerTri">
+        <div class="col">
+            <div class="card no-border">
+                <div class="card-body">
+                  <div *ngFor="let d of loyaltyByDealerTri" class="text-justify">
+                    <strong>
+                        {{d.periodo}} 
+                    </strong> <a (click)="d.view=!d.view" class="text-secondary">
+                        <i class="fas fa-eye"></i>
+                      </a><br>
+                    <span *ngFor="let dealer of loyaltyByDealer.data" class="vertical-text">
+                      <span *ngFor="let c of d.data.data">
+                          <i [ngClass]="{'fas':true, 
+                          'fa-circle':true,
+                          'text-ok':c.value>43.9,
+                          'text-pronto':(c.value>40 && c.value<43.9),
+                          'text-urgente':c.value<39.9
+                          }" *ngIf="c.name==dealer.name">
+                          </i>
+                        </span>
+                      <span class="text-sm" *ngIf="!d.view">
+                        {{dealer.name}}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+      <br><br><br><br><br><br>
+      <div class="row" *ngIf="kascDetails[0]">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+              <h5 class="card-title">
+                Satisfacción <small>[BQ010]</small>
+              </h5>
+              <ngx-charts-bar-vertical-normalized
+              [view]="view"
+              [scheme]="normalizeColor"
+              [schemeType]="schemeType"
+              [results]="kascDetails"
+              [animations]="animations"
+              [gradient]="gradient"
+              [tooltipDisabled]="tooltipDisabled"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [legendTitle]="legendTitle"
+              [showXAxisLabel]="showXAxisLabel"
+              (legendLabelClick)="onLegendLabelClick($event)"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              [showGridLines]="showGridLines"
+              [barPadding]="barPaddingNormalize"
+              [roundDomains]="roundDomains"
+              (select)="select($event)">
+            </ngx-charts-bar-vertical-normalized>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="kascDetails[0]">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+              <small class="text-muted">
+                <span class="tex-right float-right">
+                  <span class="badge badge-primary badge-ok">&nbsp;&nbsp;</span> SATISFECHO
+                  <span class="badge badge-primary badge-pronto">&nbsp;&nbsp;</span> NEUTRAL
+                  <span class="badge badge-primary badge-urgente">&nbsp;&nbsp;</span> INSATISFECHO
+                </span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br><br><br><br><br>
+      <div class="row" *ngIf="revisitDetails[0]">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+              <h5 class="card-title">
+                Intención de revisita <small>[CQ020]</small>
+              </h5>
+              <ngx-charts-bar-vertical-normalized
+              [view]="view"
+              [scheme]="normalizeColor"
+              [schemeType]="schemeType"
+              [results]="revisitDetails"
+              [animations]="animations"
+              [gradient]="gradient"
+              [tooltipDisabled]="tooltipDisabled"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [legendTitle]="legendTitle"
+              [showXAxisLabel]="showXAxisLabel"
+              (legendLabelClick)="onLegendLabelClick($event)"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              [showGridLines]="showGridLines"
+              [barPadding]="barPaddingNormalize"
+              [roundDomains]="roundDomains"
+              (select)="select($event)">
+            </ngx-charts-bar-vertical-normalized>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="revisitDetails[0]">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+              <small class="text-muted">
+                <span class="tex-right float-right">
+                  <span class="badge badge-primary badge-ok">&nbsp;&nbsp;</span> VISITARIA
+                  <span class="badge badge-primary badge-pronto">&nbsp;&nbsp;</span> NEUTRAL
+                  <span class="badge badge-primary badge-urgente">&nbsp;&nbsp;</span> NO VISITARIA
+                </span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br><br><br><br><br>
+      <div class="row" *ngIf="recommend[0]">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+              <h5 class="card-title">
+                Recomendaría <small>[CQ010]</small>
+              </h5>
+              <ngx-charts-bar-vertical-normalized
+              [view]="view"
+              [scheme]="normalizeColor"
+              [schemeType]="schemeType"
+              [results]="recommend"
+              [animations]="animations"
+              [gradient]="gradient"
+              [tooltipDisabled]="tooltipDisabled"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [legendTitle]="legendTitle"
+              [showXAxisLabel]="showXAxisLabel"
+              (legendLabelClick)="onLegendLabelClick($event)"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              [showGridLines]="showGridLines"
+              [barPadding]="barPaddingNormalize"
+              [roundDomains]="roundDomains"
+              (select)="select($event)">
+            </ngx-charts-bar-vertical-normalized>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="recommend[0]">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+              <small class="text-muted">
+                <span class="tex-right float-right">
+                  <span class="badge badge-primary badge-ok">&nbsp;&nbsp;</span> RECOMENDARIA
+                  <span class="badge badge-primary badge-pronto">&nbsp;&nbsp;</span> NEUTRAL
+                  <span class="badge badge-primary badge-urgente">&nbsp;&nbsp;</span> NO RECOMENDARIA
+                </span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br><br><br><br><br>
+      <div class="row" *ngIf="indicatorSat[1]?.series">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+              <h5 class="card-title">
+                Lealtad 
+              </h5>
+              <ngx-charts-bar-vertical
+              [view]="view"
+              [scheme]="normalizeColor"
+              [schemeType]="schemeType"
+              [customColors]="loyaltyColor"
+              [results]="indicatorSat[1].series"
+              [animations]="animations"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [legendTitle]="legendTitle"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [tooltipDisabled]="tooltipDisabled"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="'% Loyalty'"
+              [showGridLines]="showGridLines"
+              [barPadding]="barPaddingNormalize"
+              [roundDomains]="roundDomains"
+              [roundEdges]="roundEdges"
+              [yScaleMax]="yScaleMax"
+              (select)="select($event)"
+              (legendLabelClick)="onLegendLabelClick($event)">
+            </ngx-charts-bar-vertical>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="indicatorSat[1]?.series">
+        <div class="col">
+          <div class="card no-border">
+            <div class="card-body">
+              <small class="text-muted">
+                Lealtad Objetivo 44%
+                <span class="tex-right float-right">
+                  <span class="badge badge-primary badge-ok">&nbsp;&nbsp;</span> 100% - 44%
+                  <span class="badge badge-primary badge-pronto">&nbsp;&nbsp;</span> 43.9% - 40%
+                  <span class="badge badge-primary badge-urgente">&nbsp;&nbsp;</span> 39.9% - 0%
+                </span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br><br><br><br><br>
+  <div class="row" *ngIf="frftByDealer?.data">
+    <div class="col">
+      <div class="card no-border">
+        <div class="card-body">
+          <h5 class="card-title">FRFT: First repair first time</h5>
+          <ngx-charts-bar-vertical
+            [view]="view"
+            [results]="frftByDealer.data"
+            [gradient]="gradient"
+            [customColors]="frftByDealer.color"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="'FRFT %'"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"  *ngIf="frftByDealer?.data">
+    <div class="col">
+      <div class="card no-border">
+        <div class="card-body">
+          <small class="text-muted">
+            FRFT: Mide que tan bien reparado quedó el vehículo en la primera interveción, Objetivo 95%
+            <span class="tex-right float-right">
+              <span class="badge badge-primary badge-ok">&nbsp;&nbsp;</span> 100% - 95%
+              <span class="badge badge-primary badge-pronto">&nbsp;&nbsp;</span> 94.9% - 90%
+              <span class="badge badge-primary badge-urgente">&nbsp;&nbsp;</span> 89.9% - 0%
+            </span>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="frftByDealerTri">
+    <div class="col">
+      <div class="card no-border">
+          <div class="card-body">
+            <div *ngFor="let d of frftByDealerTri" class="text-justify">
+              <strong>
+                  {{d.periodo}} 
+              </strong> <a (click)="d.view=!d.view" class="text-secondary">
+                  <i class="fas fa-eye"></i>
+                </a><br>
+              <span *ngFor="let dealer of loyaltyByDealer.data" class="vertical-text">
+                <span *ngFor="let c of d.data.data">
+                    <i [ngClass]="{'fas':true, 
+                    'fa-circle':true,
+                    'text-ok':c.value>94.999,
+                    'text-pronto':(c.value>89.999 && c.value<94.999),
+                    'text-urgente':c.value<89.9999
+                    }" *ngIf="c.name==dealer.name">
+                    </i>
+                  </span>
+                <span class="text-sm" *ngIf="!d.view">
+                  {{dealer.name}}
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <br> <br><br><br><br><br>
+  <div class="row" *ngIf="frftTopOffenders">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+          FRFT Reparar bien a la primera vez <small>TOP OFFENDERS</small>
+        </h5>
+        <ngx-charts-bar-vertical-2d
+        [view]="view"
+        [scheme]="lineChartScheme"
+        [results]="frftTopOffenders"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="true"
+        [legendTitle]="legendTitle"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [tooltipDisabled]="tooltipDisabled"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="'% Top Offenders'"
+        (legendLabelClick)="onLegendLabelClick($event)"
+        [showGridLines]="showGridLines"
+        
+        [groupPadding]="groupPadding"
+        [roundDomains]="roundDomains"
+        [roundEdges]="roundEdges"
+        [yScaleMax]="yScaleMax"
+        (select)="select($event)"
+        ></ngx-charts-bar-vertical-2d>
+      </div>
+    </div>
+  </div>
+  <br><br><br><br><br><br>
+  <div class="row" *ngIf="frftByPer?.data && frftByPer?.color">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+          FRFT total por período
+        </h5>
+        <ngx-charts-bar-vertical
+            [view]="view"
+            [results]="frftByPer.data"
+            [gradient]="gradient"
+            [customColors]="frftByPer.color"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [barPadding]="30"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="'FRFT %'"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+      </div>
+    </div>
+  </div>
+  <br> <br><br><br><br><br>
+  <div class="row" *ngIf="frftOffenders">
+    <div class="col">
+      <div class="card no-border">
+        <div class="card-body">
+          <h5 class="card-title">
+            Razones por las que debe retornar al taller <small>[BQ030]</small>
+          </h5>
+          <ngx-charts-bar-vertical
+            [view]="view"
+            [results]="frftOffenders"
+            [gradient]="gradient"
+            [scheme]="OneColor"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [barPadding]="30"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="'FRFT %'"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br> <br><br><br><br><br>
+  <div class="row" *ngIf="dealerScore[0] && dealerScoreColor[0]">
+    <div class="col">
+      <div class="card no-border">
+        <div class="card-body">
+          <h5 class="card-title">
+            Dealer Scored
+          </h5>
+          <ngx-charts-bar-vertical
+            [view]="view"
+            [results]="dealerScore"
+            [gradient]="gradient"
+            [customColors]="dealerScoreColor"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="'Score %'"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card no-border">
+        <div class="card-body">
+          <p class="card-text">
+            <strong>Valores de la evaluación por indicador: </strong>
+            <span>FRFT: 40% -</span>
+            <span>Lealtad: 30% -</span>
+            <span>Kacs: 20% -</span>
+            <span>KOT: 10%  Los valores de KOT aún no se han tomado en cuenta</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+      
+</section>
+<div class="card" *ngIf="!(frftTopOffenders && frftOffenders && frftByDealerTri && frftByDealer?.data && kascGeneral[0] && indicatorSat[0] && kascDealer?.kasc && kacs[0].series[0] && kacs[1].series[0] && loyaltyByDealer.data && loyaltyByDealerTri && kascDetails[0] && revisitDetails[0] && recommend[0] && indicatorSat[1]?.series && dealerScore[0] && dealerScoreColor[0])">
+    <div class="card-body text-center"> <br><br>
+        <i class="card-text  text-primary fas fa-circle-notch fa-pulse fa-3x"></i> <br>
+        <h3 class="card-title text-muted">Estamos trabajando... </h3> <br><br>
+    </div>
+</div>
+
+<section>
+  <p class="text-muted text-sm text-justify">
+    Data include: from: {{search.fromDate}} to: {{search.toDate}}, dealers: 
+  <span *ngFor="let i of search.group; let j=index">{{i}} <span *ngIf="j<search.group.length -1">,</span> </span>
+    <br> Posventa Importadora | <strong>Metrokia S.A</strong>
+  </p>
+</section>

@@ -1,0 +1,124 @@
+
+<div class="row">
+  <div class="col">
+    <div class="card bg-light">
+      <div class="card-body">
+            <h5 class="card-title">
+              New Clinic Service
+            </h5>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="row">
+                      <div class="col-lg-2">
+                        <label for="">Cód</label>
+                        <input type="text" [(ngModel)]="sClinic.cod" class="form-control form-control-sm" autocomplete="on" disabled>
+                        <small class="form-text text-muted">
+                          Cógido
+                        </small>
+                      </div>
+                      <div class="col">
+                        <label for="">Title</label>
+                        <input type="text" [(ngModel)]="sClinic.title" class="form-control form-control-sm" autocomplete="on" autofocus>
+                        <small class="form-text text-muted">
+                          clinic service's title
+                        </small>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Description</label>
+                        <textarea rows="3" class="form-control" wrap="hard" [(ngModel)]="sClinic.description" ></textarea>
+                        <small class="form-text text-muted">
+                          clinic service's description
+                        </small>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Select Include services</label>
+                        <select name="" id="" class="form-control form-control-sm" [(ngModel)]="cacthValue" >
+                          <option value="">Select something services</option>
+                          <option value="Alineación y balanceo">Alineación y balanceo</option>
+                          <option value="5% en Repuestos">5% en Repuestos</option>
+                          <option value="5% en MO">5% en Mano de Obra</option>
+                          <option value="Alistamiento">Alistamiento</option>
+                          <option value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam vel provident dolores doloremque laudantium animi tenetur dolorum suscipit quae ab eius laborum distinctio, a possimus. Dignissimos nulla numquam maiores. Quae?">text-long</option>
+                        </select>
+                        <small class="form-text text-muted">
+                          Select and click on add service
+                        </small>
+                        <button class="btn btn-outline-secondary btn-sm float-right" (click)="addService(cacthValue)">Add service</button>
+                        <br>
+                        <p *ngIf="serviceInclude">Include services</p>
+                        <ul class="list-group">
+                          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let s of serviceInclude">
+                              {{s.service}}
+                            <button class="btn btn-outline-danger btn-sm" (click)="deletService(s)" ngbTooltip="Delet from list">
+                              <i class="fas fa-trash-alt"></i>
+                            </button>
+                          </li>
+                        </ul>
+
+                        
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Estimated cost <strong *ngIf="sClinic.estimated_cost">{{sClinic.estimated_cost|currency:'$ '}}</strong> </label>
+                        <input type="number" class="form-control form-control-sm" [(ngModel)]="sClinic.estimated_cost">
+                        <small class="form-text text-muted">budget</small>
+                      </div>
+                    </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="row">
+                      <div class="col text-center">
+                        <p>Clinic Service's days</p>
+                        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" ></ngb-datepicker>
+                      </div>
+                    </div>
+              </div>
+              <div class="col-lg-12">
+                  <div class="row">
+                      <div class="col">
+                        <button class="btn btn-primary btn-sm" (click)="createClinic(success)"> Create Service Clinic</button>
+                      </div>
+                    </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+
+
+<!-- Date Picker -->
+<ng-template #t let-date="date" let-focused="focused">
+  <span class="custom-day"
+  [class.focused]="focused"
+  [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
+  [class.faded]="isHovered(date) || isInside(date)"
+  (mouseenter)="hoveredDate = date"
+  (mouseleave)="hoveredDate = null">
+  {{date.day}}
+</span>
+</ng-template>
+<!-- Modal informativo -->
+<ng-template #success let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+      {{sClinic.cod}} Genial! 
+    </h4>
+    <button type="button" class="close" aria-label="close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Se ha Creado una nueva Clinica de servicio, esta estará vigente del {{sClinic.from_date}} hasta el {{sClinic.to_date}}
+      y el código es <strong>{{sClinic.cod}}</strong>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="c('Close click')">De acuerdo</button>
+  </div>
+</ng-template>

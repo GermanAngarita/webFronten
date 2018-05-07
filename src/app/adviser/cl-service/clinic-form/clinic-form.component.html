@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-lg-6 offset-lg-3">
+    <h5 class="card-title text-center">
+      {{clinic.title}}
+    </h5>
+    <small><span class="float-right">{{today|date:'d MMMM y h:mm:ss a'}}</span></small>
+    <div class="form-group">
+      <label for="">Placa </label>
+      <input [(ngModel)]="newReg.placa" type="text" class="form-control text-uppercase" maxlength="6" minlength="6" autofocus>
+      <small class="form-text text-muted">
+        Digite 6 caracteres sin el guión medio (-)
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="">Valor Mano de Obra <strong>{{newReg.mo|currency:'$'}}</strong></label>
+      <input [(ngModel)]="newReg.mo" type="number" class="form-control" min=1000 max=99999999>
+      <small class="form-text text-muted">
+        Valor cotizado en mano de obra
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="">Valor en Repuestos <strong>{{newReg.repuestos|currency:'$'}}</strong></label>
+      <input [(ngModel)]="newReg.repuestos" type="number" class="form-control" min="1000" max="99999999">
+      <small class="form-text text-muted">
+        Valor cotizado en repuestos
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="">Comentarios del cliente</label>
+      <textarea [(ngModel)]="newReg.comentarios" rows="3" class="form-control" wrap="hard"></textarea>
+    </div>
+    <!-- <button class="btn btn-secondary btn-lg btn-block">
+      <i class="fas fa-camera"></i> take a picture
+    </button> -->
+    <button class="btn btn-primary btn-lg btn-block" (click)="reqClinicVisit(success)">
+      <i class="fas fa-save"></i> Guardar Registro
+    </button>
+
+    <br>
+    <div class="col ">
+      <p class="text-justify">
+        <small>
+          <strong>Nota Legal: </strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos ea similique id error optio in deleniti voluptate, amet pariatur voluptas accusamus blanditiis voluptates explicabo incidunt labore eligendi enim officiis saepe.
+        </small>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #success let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+      Registro de visitas 
+    </h4>
+    <button type="button" class="close" aria-label="close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>{{message?.message}}</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="c('Close click')">De acuerdo</button>
+  </div>
+</ng-template>
+<!-- <pre>
+{{newReg|json}}
+</pre> -->

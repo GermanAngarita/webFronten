@@ -1,0 +1,75 @@
+<h5>Service Clinic <small> <span>Total </span>{{total}}</small></h5>
+
+<div class="tabler-responsive" *ngIf="clinics[0]">
+  <table class="table table-sm table-striped">
+    <thead class="thead-dark" >
+      <tr>
+        <th>Cod</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Estimated</th>
+        <th>Status</th>
+        <th>By</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of clinics">
+        <td class="text-uppercase" ngbTooltip="{{c.cod}}" >{{c.cod| slice:0:4}}</td>
+        <td class="text-capitalize"><strong>{{c.title | slice:0:12}}</strong></td>
+        <td>{{c.description | slice:0:12}} &hellip;</td>
+        <td>{{c.from_date | date:'d MMMM y h:mm:ss'}}</td>
+        <td>{{c.to_date | date:'d MMMM y h:mm:ss a'}}</td>
+        <td>{{c.estimated_cost | currency:' ':-2}}</td>
+        <td>
+          <span [ngClass]="{'badge':true, 'badge-primary':c.active, 'badge-secondary':!c.active}">
+              <i [ngClass]="{'fas fa-1x':true, 'fa-volume-up':c.active, 'fa-volume-off':!c.active }"></i>
+              <span *ngIf="c.active"> On </span>
+              <span *ngIf="!c.active"> Off </span>
+          </span>
+        </td>
+        <td *ngIf="c.user">
+          <span class="text-capitalize"> <span>[{{c.user[0].role}}]</span> {{c.user[0].name}}</span>
+        </td>
+        <td>
+          <button class="btn btn-outline-primary btn-sm" (click)="info(c)" >Info</button>
+          <button class="btn-outline-danger btn btn-sm" (click)="confirmDelet(confirm, c)" >Delet</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ngb-pagination *ngIf="total>10" [collectionSize]="total" [(page)]="search.page" [(maxSize)]="search.maxSize" aria-label="Default pagination" (pageChange)="getClinics($event)"></ngb-pagination>
+<div class="row text-muted" *ngIf="!clinics[0]">
+    <div class="col-lg-12 text-center">
+      <i class="fas fa-sticky-note fa-10x"></i>
+      <h3>Aún no hay Clinicas de servicio registradas.</h3>
+      <p>Puede registrar clinicas de servicio en el menú <strong>Create Clinic </strong>
+        <br><br>
+        <small>
+          Recuerde que las clinicas de servicio estarán disponibles para los asesores desde la fecha de inicio y cerraran hasta la fecha final, esto hace que los asesores solo puedan registrar las visitas mientras que la clinica de servicio permanezca activa
+        </small>
+      </p>
+    </div>
+  </div>
+
+<ng-template #confirm let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+      ¿Está seguro?
+    </h4>
+    <button type="button" class="close" aria-label="close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>No recomendamos eliminar la clinica de servicio, si aún desea hacerlo haga clic en Eliminar Clinica</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light" (click)="deletClinic(); c('Close click')">Eliminar Clinica</button>
+    <button class="btn btn-primary" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

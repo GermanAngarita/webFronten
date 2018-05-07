@@ -1,0 +1,150 @@
+<div class="container-fluid"><br>
+  <ngb-tabset type="pills">
+      <ngb-tab>
+          <ng-template ngbTabTitle>Dealers</ng-template>
+          <ng-template ngbTabContent><br>
+            <table class="table table-bordered table-sm" *ngIf="dealer">
+                <thead>
+                  <tr>
+                    <th>Cod</th>
+                    <th>Zon</th>
+                    <th>Group</th>
+                    <th>Dealer</th>
+                    <th>Sub Name</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Service</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let d of dealer?.dealers">
+                    <td class="text-uppercase">
+                      <input type="text" [(ngModel)]="d.dealer_cod" [disabled]="!d.edition" class="form-control form-control-sm text-uppercase">
+                    </td>
+                    <td>
+                      <input type="text" [(ngModel)]="d.zone" [disabled]="!d.edition" class="form-control form-control-sm text-uppercase">
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="d.group_dealer" [disabled]="!d.edition" class="form-control form-control-sm text-uppercase">
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="d.name_dealer" [disabled]="!d.edition" class="form-control form-control-sm text-uppercase">
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="d.subname_dealer" [disabled]="!d.edition" class="form-control form-control-sm text-uppercase">
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="d.address" [disabled]="!d.edition" class="form-control form-control-sm text-uppercase">
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="d.city" [disabled]="!d.edition" class="form-control form-control-sm text-uppercase">
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="d.type_dealer" [disabled]="!d.edition" class="form-control form-control-sm text-uppercase">
+                    </td>
+                    <td>
+                      <button class="btn btn-primary btn-sm" (click)="d.edition=true" *ngIf="!d.edition">
+                          <i class="fas fa-edit"></i> Edit
+                      </button>
+                      <button class="btn btn-success btn-sm" (click)="saveEdition(d); d.edition=false" *ngIf="d.edition">
+                          <i class="far fa-save"></i> Save
+                      </button>
+                      <button class="btn btn-secondary btn-sm" (click)="d.edition=false" *ngIf="d.edition">
+                          <i class="fas fa-ban"></i> Cancel
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+            <div class="jumbotron" *ngIf="!dealer">
+            <h1 class="display-4">¡Ups! aún no hay Dealers Registrados, o te encuentras sin conexión</h1>
+            <p class="lead">Puede que no existan registros en la base de datos, o simplemente estes experimentando problemas de conexión.</p>
+            <hr class="my-4">
+            <p>Para registrar nuevos distribuidores por favor sigue a "Registrar Dealer Nuevo", en esta misma ventana</p>
+            </div>
+            <br>
+          </ng-template> 
+      </ngb-tab>
+      <ngb-tab>
+          <ng-template ngbTabTitle>Registrar Dealer <b>Nuevo</b></ng-template>
+          <ng-template ngbTabContent> <br>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Registro Dealer</h5>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="exampleInputEmail1">Código CL</label>
+                                    <input [(ngModel)]="newDealer.dealer_cod" type="text" class="form-control form-control-sm" maxlength="5">
+                                    <small class="form-text text-muted">Código ante Corea. Máximo 5 caracteres</small>
+                                </div>
+                                <div class="col">
+                                    <label for="exampleInputEmail1">Zona</label>
+                                    <input [(ngModel)]="newDealer.zone" type="text" class="form-control form-control-sm" maxlength="2">
+                                    <small class="form-text text-muted">Zona de Servicio. Máximo 2 caracteres</small>
+                                </div>
+                                <div class="col">
+                                    <label for="exampleInputEmail1">Dealer</label>
+                                    <input [(ngModel)]="newDealer.name_dealer" type="text" class="form-control form-control-sm">
+                                    <small class="form-text text-muted">Nombre del Dealer</small>
+                                </div>
+                                <div class="col">
+                                    <label for="exampleInputEmail1">Group</label>
+                                    <input [(ngModel)]="newDealer.group_dealer" type="text" class="form-control form-control-sm">
+                                    <small class="form-text text-muted">Grupo al que pertenece el concesionario</small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="exampleInputEmail1">Sub Name</label>
+                                    <input [(ngModel)]="newDealer.subname_dealer" type="text" class="form-control form-control-sm">
+                                    <small class="form-text text-muted">Abreviatura o detalle del nombre</small>
+                                </div>
+                                <div class="col">
+                                    <label for="exampleInputEmail1">City</label>
+                                    <input [(ngModel)]="newDealer.city" type="text" class="form-control form-control-sm">
+                                    <small class="form-text text-muted">Ciudad del Concesionario</small>
+                                </div>
+                                <div class="col">
+                                    <label for="exampleInputEmail1">Service</label>
+                                    <select [(ngModel)]="newDealer.type_dealer" class="form-control form-control-sm">
+                                        <option value="">Services</option>
+                                        <option value="S1">1S</option>
+                                        <option value="S2">2S</option>
+                                        <option value="S3">3S</option>
+                                    </select>
+                                    <small class="form-text text-muted">Tipo de Servicio</small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="exampleInputEmail1">Address</label>
+                                    <input [(ngModel)]="newDealer.address" type="text" class="form-control form-control-sm">
+                                    <small class="form-text text-muted">Dirección del concesionario</small>
+                                </div>
+                                <div class="col">
+                                    <label for="exampleInputEmail1">Coordinate</label>
+                                    <input [(ngModel)]="newDealer.coordinate" type="text" class="form-control form-control-sm">
+                                    <small class="form-text text-muted">Coordenadas de ubicación</small>
+                                </div>
+                            </div>
+                            <ngb-alert [dismissible]="false" *ngIf="message">
+                                <strong>Warning!</strong> {{message.error.message}}: Revise que el CL del Dealer que está intentando crear este disponible y no haya sido usado por otro dealer.
+                            </ngb-alert>
+                            <ngb-alert *ngIf="messageOk?.on" type="success" (close)="messageOk.on=false">
+                                <strong>Genial!</strong> {{messageOk.msg}}
+                            </ngb-alert>
+                            <div class="form-group">
+                                <button class="btn-primary btn" (click)="saveNewDealer(newDealer)">Guardar Dealer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+          </ng-template> 
+      </ngb-tab>
+    </ngb-tabset>
+</div>
+

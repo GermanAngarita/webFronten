@@ -1,0 +1,145 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">
+      {{user.group}} <small>Billing Report</small>
+    </h5>
+    <div class="row" *ngIf="filterDealer">
+      <div class="col-lg-12">
+        <p><strong>Filter by Dealer</strong></p>
+      </div>
+      <div class="col-lg-3" *ngFor="let de of dealers">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="de.select" (change)="setFilterDealer()">
+            <label for="" class="form-check-label">{{de.d_cod}} <small>{{de.d_subname}}</small></label>
+        </div>
+      </div>
+    </div><br *ngIf="filterDealer">
+    <div class="row" *ngIf="filterYear">
+      <div class="col-lg-12">
+        <p><strong>Filter by Year</strong></p>
+      </div>
+      <div class="col-lg-3">
+          <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="selectAllYear" (change)="setFilterAllYear(selectAllYear)">
+              <label for="" class="form-check-label">Select All Years</label>
+          </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" *ngFor="let y of year">
+          <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="y.select" (change)="setFilterYear()">
+              <label for="" class="form-check-label">{{y.year}}</label>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="vFilterModel">
+        <div class="row">
+            <div class="col-lg-12">
+                <hr>
+                <strong>Filter by Model</strong>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="selectAllModel" (change)="setFilterAllModel(selectAllModel)">
+                    <label for="" class="form-check-label">Select All Model</label>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" *ngFor="let m of model">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="m.select" (change)="setFilterModel()">
+                    <label for="" class="form-check-label">{{m.model}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="vFilterWarranty">
+        <div class="row">
+            <div class="col-lg-12">
+                <hr>
+                <strong>Filter by StatusWarranty</strong>
+            </div>
+            <div class="col-lg-3" *ngFor="let s of statusWarranty">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="s.select" (change)="setFilterUw()">
+                    <label for="" class="form-check-label">{{s.status}}</label>
+                </div>
+            </div>
+        </div>
+    </div> <br *ngIf="vFilterWarranty">
+    <div class="row">
+      <div class="col-lg-12">
+        <button class="btn-outline-secondary btn btn-sm" (click)="filterDealer=!filterDealer">Filter by Dealer</button>
+        <button class="btn-outline-secondary btn btn-sm" (click)="filterYear=!filterYear">Filter by Year</button>
+        <button class="btn btn-sm btn-outline-secondary" (click)="vFilterModel=!vFilterModel">Filter by Model</button>
+        <button class="btn btn-sm btn-outline-secondary" (click)="vFilterWarranty=!vFilterWarranty">Filter by Warranty Status</button>
+        <button class="btn btn-sm btn-outline-primary" (click)="getData()">Generate Report</button>
+      </div>
+    </div>
+  </div>
+</div> <br>
+
+<div class="card" *ngIf="ByBillPerYear">
+  <div class="card-body">
+    <h5 class="card-title">Billing Report</h5>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body chart-principal">
+            <h5 class="card-title">Bill Date <small>Please select year of the chart</small></h5>
+            <ngx-charts-bar-vertical
+            [scheme]="colorScheme"
+            [results]="ByBillPerYear"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            (select)="onSelect($event)"></ngx-charts-bar-vertical>
+            <!-- <p>Total unidades por año de facturación</p> -->
+          </div>
+        </div>
+      </div>
+    </div> <br> <br> <br>
+    <div class="row cardNumber" *ngIf="modelDetail[0]">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body ">
+            <h5 class="card-title">Detail: Year {{modelDetail[0].name}}</h5>
+            <h5 class="display-4 text-secondary">{{modelDetail[0].total|currency:'$ ':0}}</h5>
+            <span class="badge badge-primary">Total {{modelDetail[0].value|currency:' ':0}}  Units</span>
+            <span class="badge badge-info">Average {{modelDetail[0].total/modelDetail[0].value|currency:' ':0}} By Unit</span>
+          </div>
+        </div>
+      </div>
+    </div> <br>
+    <div class="row" *ngIf="modelDetail[0]">
+      <div class="col-lg-3" *ngFor="let model of modelDetail[0].model">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">[{{model.name}}] <span *ngFor="let m of modelConvention">
+                <span *ngIf="m.cod == model.name"> {{m.description}} </span>
+              </span> </h5>
+                <p>
+                  Units: {{model.value}} - {{(model.value/modelDetail[0].value)*100|currency:' ':0}}%
+                    <ngb-progressbar type="info" [value]="model.value" [max]="modelDetail[0].value" placement="right" ngbTooltip="{{(model.value/modelDetail[0].value)*100|currency:' ':0}}%"></ngb-progressbar>
+                </p>
+                <p>
+                  Value: {{model.total|currency:'$ ':0}}
+                    <ngb-progressbar type="info" [value]="model.total" [max]="modelDetail[0].total" placement="right" ngbTooltip="{{(model.total/modelDetail[0].total)*100|currency:' ':0}}%"></ngb-progressbar>
+                </p>
+                
+            </div>
+          </div> <br>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 
+<pre>
+  {{modelConvention|json}}
+</pre> -->
+
+

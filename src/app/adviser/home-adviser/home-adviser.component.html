@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-lg-12 text-center">
+    <ngb-carousel *ngIf="images">
+      <ng-template ngbSlide>
+        <img [src]="images[0]" class="slider-principal" alt="Imagen">
+        <div class="carousel-caption">
+          <!-- <h3>Lol</h3>
+          <p>Info extra</p> -->
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <img [src]="images[1]" class="slider-principal" alt="Imagen">
+        <div class="carousel-caption">
+          <!-- <h3>Lol</h3>
+          <p>Info extra</p> -->
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+</div> <br>
+<div class="row">
+  <div class="col-lg-7">
+    <h5 class="text-right">Avisos</h5>
+    <hr>
+    <div *ngFor="let a of avisos">
+      <blockquote class="blockquote">
+          <p class="mb-0">
+              {{a.title}}
+          </p>
+          <footer class="blockquote-footer">
+              By: {{a.user.name}}
+          </footer>
+      </blockquote>
+      <p>
+        {{a.content}}
+      </p>
+      <hr>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <!-- <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Boletines</h5>
+      </div>
+    </div> -->
+  </div>
+</div>

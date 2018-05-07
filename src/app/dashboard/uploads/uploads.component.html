@@ -1,0 +1,352 @@
+<div class="row justify-content-md-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Query <small>Administración</small></h5>
+          <p class="card-text">
+            Query principal 
+          </p>
+          <input type="file" (change)="onFileChange($event)" multiple="false" class="btn">
+        </div>
+        <ngb-progressbar type="primary" [value]="progress" height="10px"></ngb-progressbar>
+      </div>
+    </div>
+    <div class="col-lg-8" *ngFor="let row of data; let i=index">
+      <div class="card" *ngIf="i < 1">
+        <div class="card-body">
+          
+
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Empresa
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control form-control-sm" [(ngModel)]="fieldControl.emp_empresa">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            </li>
+            <li class="list-group-item">
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Transacción
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control form-control-sm" [(ngModel)]="fieldControl.transaction">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Factura
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control form-control-sm" [(ngModel)]="fieldControl.bill">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Departamento
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control" [(ngModel)]="fieldControl.department">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Localización
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control" [(ngModel)]="fieldControl.location">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Ubicación
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control" [(ngModel)]="fieldControl.ubication">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Fecha Factura
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control" [(ngModel)]="fieldControl.bill_date">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Versión o Artículo
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.version">
+                      <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+                </div>
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Modelo
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control" [(ngModel)]="fieldControl.model">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Modelo Descripción
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control" [(ngModel)]="fieldControl.model_description">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Cliente
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control" [(ngModel)]="fieldControl.customer">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-6 col-form-label">
+              Sub Total
+            </label>
+            <div class="col-sm-6">
+              <select name="" id="" class="form-control" [(ngModel)]="fieldControl.subtotal">
+                  <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+              </select>
+            </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-6 col-form-label">
+                Total
+              </label>
+              <div class="col-sm-6">
+                <select name="" id="" class="form-control" [(ngModel)]="fieldControl.total">
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Observaciones
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.observations">
+                      <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Versión Descripción
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.version_description">
+                      <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  VIN
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.vin">
+                      <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Entrada Retail
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.retail_in_date">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Salida Retail
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.retail_out_date">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Inicio Garantía Fábrica
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.fab_ini_warranty">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Año Modelo
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.year">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Fin Garantía Fábrica
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.fab_end_warranty">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Distribuidor Código
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.dealer_cod">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Motor
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.engine">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Color
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.color">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Punto de Venta
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.sales_point">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Tipo Garantía
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.gao_type">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Duración Garantía
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.gao_duration">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Días restantes
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.days_slopes_warranty">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label">
+                  Uso
+                </label>
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control" [(ngModel)]="fieldControl.use_type">
+                    <option value="null">Ignorar Campo</option>  
+                    <option value="{{x}}" *ngFor="let value of row; let x=index">{{value}}</option>
+                  </select>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <button class="btn btn-primary" (click)="this.checkData(data)">Cargar Información</button>
+                  <p class="text-muted">
+                    <small>Se han registrado {{progressSend}} </small>
+                    <i class="fas fa-spinner fa-spin" *ngIf="spinner"></i>
+                  </p>
+              </div>
+              </div>
+            </div>
+            
+            <ngb-progressbar showValue="false" type="primary" [value]="progressSend" [max]="data.length-1"></ngb-progressbar>
+          </div>
+      </div>
+    </div>
+  </div>
+  
+
+  

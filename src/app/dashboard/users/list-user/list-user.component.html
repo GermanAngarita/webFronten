@@ -1,0 +1,140 @@
+<div class="card-columns" *ngIf="users">
+  <div class="card" *ngFor="let u of users">
+    <div class="card-body">
+        <h5 class="card-title">
+          <span class="text-capitalize">{{u.name}}</span> <span class="text-capitalize">{{u.last_name}}</span><br>
+          <small class="text-uppercase"><strong>[{{u.role}}]</strong></small> <small class="text-uppercase">{{u.group}}</small> <br>
+          <small>{{u.email}}</small>
+        </h5>
+
+        <p class="card-text">
+          <small class="text-muted">
+              Singup date: {{u.singupDate}}
+          </small>
+        </p>
+        <p *ngIf="u.viewDealers">
+
+          <span class="badge badge-pill badge-primary" *ngFor="let d of u.dealer">{{d}}</span> 
+        </p>
+        <a class="card-link" (click)="open(content); updateDealer(u)">
+          <i class="fas fa-edit"></i> Edit
+        </a>
+        <a class="card-link" (click)="confirmDelet(confirm, u)">
+          <i class="fas fa-trash-alt"></i> Delete
+        </a>
+        <a class="card-link">
+          <i *ngIf="u.active" class="fas fa-toggle-on"></i>
+          <i *ngIf="!u.active" class="fas fa-toggle-off"></i>
+          <span *ngIf="u.active">On</span>
+          <span *ngIf="!u.active">Off</span>
+        </a>
+        <a class="card-link" (click)="u.viewDealers=!u.viewDealers">
+          <i class="fas fa-building"></i> Dealers
+        </a>
+    </div>
+    
+  </div>
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Edit user: {{userToedit.email}}</h4>
+    <button type="button" class="close" aria-label="close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="">Name</label>
+          <input type="text" class="form-control form-control-sm" placeholder="Name" [(ngModel)]="userToedit.name" >
+          <small class="form-text text-muted">User's name</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Last Name</label>
+          <input type="text" class="form-control form-control-sm" placeholder="Last Name" [(ngModel)]="userToedit.last_name">
+          <small class="form-text text-muted">User's last name</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="">Role</label>
+        <select name="" id="" class="form-control form-control-sm" [(ngModel)]="userToedit.role" (change)="changeRole()">
+          <option value="">Select Role</option>
+          <option value="adviser">ADVISER</option>
+          <option value="manager">MANAGER</option>
+          <option value="service">SERVICE</option>
+          <option value="dealers">DEALERS</option>
+        </select>
+        <small class="form-text text-muted">User's role</small>
+      </div>
+      <div class="col">
+        <label for="" *ngIf="(userToedit.role == 'dealers')||(userToedit.role == 'adviser')">Select Group</label>
+        <select  name="" id="" class="form-control form-control-sm" [(ngModel)]="userToedit.group" *ngIf="(userToedit.role == 'dealers')||(userToedit.role == 'adviser')">
+          <option value="">Select group</option>
+          <option *ngFor="let g of dealers; let i=index" value="{{g.group}}" >{{g.group}}</option>
+        </select>
+        <small class="form-text text-muted" *ngIf="userToedit.role == 'dealers' ||(userToedit.role == 'adviser')">Only if role is Dealers or Adviser</small>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div  *ngFor="let g of dealers">
+                <div class="row" *ngIf="g.group == userToedit.group">
+                  <div class="col-lg-12">
+                      {{g.group}}
+                  </div> <br>
+                  <div class="col-lg-3" *ngFor="let cl of g.cl">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="cl.select" (change)="clearClfromUser()">
+                      <label for="" class="form-check-label">{{cl.cl}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="">Password</label>
+        <input type="password" class="form-control form-control-sm" [(ngModel)]="userToedit.newPassword">
+        <small class="form-text text-muted">Write a new Password</small>
+      </div>
+      <div class="col">
+          <label for="">Confirm Password</label>
+          <input type="password" class="form-control form-control-sm" [(ngModel)]="userToedit.newPasswordc">
+          <small class="form-text text-muted">Rewrite a new Password</small>
+        </div>
+    </div>
+
+
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-primary btn-sm" (click)="c('Close click')" >Cancelar</button>
+    <button class="btn btn-primary btn-sm" (click)="updateUser()" >Guardar Cambios</button>
+  </div>
+</ng-template>
+
+<ng-template #confirm let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+      ¿Está seguro?
+    </h4>
+    <button type="button" class="close" aria-label="close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>No recomendamos eliminar el usuario, sin embargo si aún desea hacerlo haga click en ELiminar usuario</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light" (click)="deletUser()">Eliminar Usuario</button>
+    <button class="btn btn-primary" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

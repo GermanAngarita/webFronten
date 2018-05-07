@@ -1,0 +1,95 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">
+      Create User
+    </h5>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="">Name</label>
+          <input type="text" class="form-control form-control-sm" placeholder="Name" [(ngModel)]="user.name" >
+          <small class="form-text text-muted">User's name</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Last Name</label>
+          <input type="text" class="form-control form-control-sm" placeholder="Last Name" [(ngModel)]="user.last_name">
+          <small class="form-text text-muted">User's last name</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">E-mail Address</label>
+          <input type="email" class="form-control form-control-sm" placeholder="Email Address" [(ngModel)]="user.email">
+          <small class="form-text text-muted">User's email address</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="">Role</label>
+        <select name="" id="" class="form-control form-control-sm" [(ngModel)]="user.role">
+          <option value="">Select Role</option>
+          <option value="adviser">ADVISER</option>
+          <option value="manager">MANAGER</option>
+          <option value="service">SERVICE</option>
+          <option value="dealers">DEALERS</option>
+        </select>
+        <small class="form-text text-muted">User's role</small>
+      </div>
+      <div class="col">
+        <label for="" *ngIf="(user.role == 'dealers')||(user.role == 'adviser')">Select Group</label>
+        <select  name="" id="" class="form-control form-control-sm" [(ngModel)]="user.group" *ngIf="(user.role == 'dealers')||(user.role == 'adviser')">
+          <option value="">Select group</option>
+          <option *ngFor="let g of dealers; let i=index" value="{{g.group}}" >{{g.group}}</option>
+        </select>
+        <small class="form-text text-muted" *ngIf="user.role == 'dealers'">Only if role is Dealers</small>
+      </div>
+      <div class="col">
+        
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="">Password</label>
+        <input type="password" class="form-control form-control-sm" [(ngModel)]="user.password">
+        <small class="form-text text-muted">User's password min 6 charts</small>
+      </div>
+      <div class="col">
+          <label for="">Confirm Password</label>
+          <input type="password" class="form-control form-control-sm" [(ngModel)]="user.c_password">
+          <small class="form-text text-muted">Confirm User's password</small>
+        </div>
+    </div>
+  </div>
+</div> <br>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Select CL from group</h5>
+    <div  *ngFor="let g of dealers">
+      <div class="row" *ngIf="g.group == user.group">
+        <div class="col-lg-12">
+            {{g.group}}
+        </div>
+        <div class="col-lg-3" *ngFor="let cl of g.cl">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="cl.select">
+            <label for="" class="form-check-label">{{cl.cl}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <br>
+<div class="card">
+  <div class="card-body">
+    <button class="btn btn-primary float-right" (click)="saveUser()">Save user</button>
+  </div>
+</div> <br>
+<p *ngIf="msg.msg">
+  <ngb-alert [type]="msg.type"  (close)="closeAlert()">
+    {{msg.msg}}
+  </ngb-alert>
+</p>

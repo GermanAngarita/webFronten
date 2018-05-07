@@ -1,0 +1,238 @@
+<div class="container-fluid">
+  <div class="row">
+      <div [ngClass]="{'col-lg-2':!menu, 'd-none':menu}">
+          <div class="card">
+            <div class="card-body">
+              <h1 class="card-title text-center display-4 text-primary"><i class="far fa-user-circle"></i></h1>
+              <h5 class="card-title text-center text-capitalize">
+                  {{user.name+' '+user.last_name}} <br>
+                  <span> <strong>{{user.group}} </strong> {{user.role}}</span>
+              </h5>
+              <p class="card-title text-center">
+                  <small >{{user.email}}</small>
+              </p>
+            </div>
+          </div> <br>
+    
+          <div class="list-group">
+            <a class="list-group-item list-group-item-action active text-white">
+                <i class="fas fa-search"></i> Search vin
+            </a>
+          </div> <br>
+    
+          <p class="text-help text-center">
+            <strong>Powered by </strong>  Posventa Importadora | Metrokia S.A <br> <br>
+            <small>
+              <strong>Contacto Soporte</strong>
+              <strong>D</strong> Calle 224 No 9 -60
+              <strong>T</strong> +571 364 9700 ext. 1264
+              <strong>E</strong> mtkingdespos@kia.com.co
+            </small>
+          </p>
+        </div>
+        <div class="col-lg-10">
+            <div class="card element bg-light"> 
+                <div class="card-body">
+                  <h5 class="card-title display-4 text-center">
+                    vin search 
+                  </h5>
+                  <div class="row">
+                    <div class="col-lg-4 offset-lg-4">
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search" [(ngModel)]="body.vin" minlength="17" maxlength="17">
+                          <div class="input-group-append">
+                            <button class="btn btn-secondary" (click)="getVin()">
+                              <i class="fas fa-search"></i>
+                            </button>
+                          </div>
+                        </div>
+                    </div>
+                  </div> <br>
+                  <div class="row" *ngIf="vin.vins">
+                    <div class="col-lg-4">
+                      <div class="card">
+                        <img class="card-img-top" src="../../assets/{{vin?.vins?.model_description}}.jpg" alt="Img Model">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                              <strong>[{{vin?.vins?.modelo_cod}}]</strong>  
+                              <strong>[{{vin?.vins?.model}}]</strong> 
+                              {{vin?.vins?.model_description}} <br>
+                              <small>
+                                  {{vin?.vins?.version_description}}
+                              </small>
+                            </h5>
+                        </div>
+                      </div> <br>
+                      <div class="card" *ngIf="vin.vins">
+                          <div class="card-body">
+                              <p class="card-title">Información Transaccional</p>
+                              <div class="row text-small">
+                                <dt class="col-sm-6">Empresa:</dt>
+                                <dd class="col-sm-6">{{vin?.vins?.emp_empresa}}</dd>
+                
+                                <dt class="col-sm-6">Transacción:</dt>
+                                <dd class="col-sm-6">{{vin?.vins?.transaction}}</dd>
+                
+                                <dt class="col-sm-6">Factura:</dt>
+                                <dd class="col-sm-6">{{vin?.vins?.bill}} del {{vin?.vins?.bill_date|date:'dd/MM/yyyy'}}</dd>
+                
+                                <dt class="col-sm-6">Dep:</dt>
+                                <dd class="col-sm-6">{{vin?.vins?.department}}</dd>
+                
+                                <dt class="col-sm-6">Localización:</dt>
+                                <dd class="col-sm-6">{{vin?.vins?.location}}</dd>
+                
+                                <dt class="col-sm-6">Ubicación:</dt>
+                                <dd class="col-sm-6">{{vin?.vins?.ubication}}</dd>
+                
+                                <dt class="col-sm-6">Ingreso Retail:</dt>
+                                <dd class="col-sm-6">{{vin?.vins?.retail_in_date|date:'dd/MM/yyyy'}}</dd>
+                
+                                <dt class="col-sm-6">Salida Retail:</dt>
+                                <dd class="col-sm-6">{{vin?.vins?.retail_out_date|date:'dd/MM/yyyy'}}</dd>
+                
+                                <dt class="col-sm-6">Observaciones</dt>
+                                <dd class="col-sm-6">
+                                    <span class="text-muted text-help">{{vin?.vins?.observations}}</span>
+                                </dd>
+                
+                                <dt class="col-sm-6">Cliente</dt>
+                                <dd class="col-sm-6">{{vin?.vins?.customer}}</dd>
+                
+                                <dt class="col-sm-6">Total</dt>
+                                <dd class="col-sm-6">{{vin?.vins?.total|currency: '$ '}}</dd>
+                              </div>
+                          </div>
+                          
+                        </div>
+              
+              
+                    </div> <br>
+              
+                    <div class="col-lg-8">
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">
+                             <small>
+                               <span class="badge badge-primary">VIN: </span>
+                             </small> {{vin?.vins?.vin}}
+                          </h5>
+                          <span>
+                            <span class="badge badge-secondary">Engine: </span>
+                          </span> {{vin?.vins?.engine}}
+                          <dl class="row">
+                              <dt class="col-sm-3">Año:</dt>
+                              <dd class="col-sm-9">{{vin?.vins?.year}}</dd>
+                  
+                              <dt class="col-sm-3">Origen:</dt>
+                              <dd class="col-sm-9">
+                                <span>[{{vin?.vins?.from}}]</span> 
+                                <span *ngIf="vin?.vins?.vin[0] == 'K'"> Corea</span>
+                                <span *ngIf="vin?.vins?.vin[0] == '3'"> México</span>
+                                <span *ngIf="vin?.vins?.vin[0] == '8'"> Ecuador</span>
+                              </dd>
+                  
+                              <dt class="col-sm-3">Modelo:</dt>
+                              <dd class="col-sm-9"><strong>{{vin?.vins?.model}} </strong> {{vin?.vins?.model_description}} 
+                                <span><strong>{{vin?.vins?.version}} </strong>  <small>{{vin?.vins?.version_description}}</small></span>
+                              </dd>
+                  
+                              <dt class="col-sm-3">Color:</dt>
+                              <dd class="col-sm-9">{{vin?.vins?.color}}</dd>
+                  
+                              <dt class="col-sm-3">Dealer</dt>
+                              <dd class="col-sm-9">{{vin?.vins?.dealer_cod}}</dd>
+                  
+                              <dt class="col-sm-3">Punto Venta: </dt>
+                              <dd class="col-sm-9"> <strong>{{vin?.vins?.sales_point}}</strong> </dd>
+                            </dl>
+                            <h6 class="card-subtitle mb-2 text-muted">Información Garantías</h6>
+              
+                            <div class="row">
+                              <dt class="col-sm-3">Garantía</dt>
+                              <dd class="col-sm-9">{{vin?.vins?.gao_type}} [ {{vin?.vins?.gao_duration}} Días ]</dd>
+              
+                              <dt class="col-sm-3">Tipo Uso</dt>
+                              <dd class="col-sm-9">{{vin?.vins?.use_type}}</dd>
+              
+                              <dt class="col-sm-3">Inicio Garantía Fábrica</dt>
+                              <dd class="col-sm-9">{{vin?.vins?.fab_ini_warranty|date:'dd/MM/yyyy'}}</dd>
+              
+                              <dt class="col-sm-3">Fin Garantía Fábrica</dt>
+                              <dd class="col-sm-9">{{vin?.vins?.fab_end_warranty|date:'dd/MM/yyyy'}}</dd>
+              
+                              <dt class="col-sm-3">Garatía de Fábrica</dt>
+                              <dd class="col-sm-9">
+                                <span *ngIf="(-(vin?.vins?.fab_ini_warranty | amDifference: today :'days' : true))>vin?.vins?.gao_duration">
+                                    UOW - <span class="badge badge-warning">OUT WARRANTY</span>
+                                </span>
+                                <span *ngIf="(-(vin?.vins?.fab_ini_warranty | amDifference: today :'days' : true))<vin?.vins?.gao_duration">
+                                    UIW <span class="badge badge-success">WARRANTY ACTIVE</span>
+                                </span>
+                              </dd>
+                            </div>
+                        </div>
+                      </div> <br>
+              
+                      <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">
+                              Información adicional
+                            </h5>
+                          </div>
+                        </div>
+                    </div> <br>
+                    
+                  </div>
+                  <br>
+                  <div class="row" *ngIf="vin.vins">
+                    <div class="col-lg-12">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">
+                              Mantenimientos
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="row text-muted" *ngIf="err?.status">
+                    <div class="col-lg-12 text-center">
+                      <i class="fas fa-car fa-10x text-secondary"></i> <br>
+                      <h3>{{err.status+' '+err.statusText}}</h3>
+                      <p>El vin no ha sido encontrado, por favor inténtelo nuevamente. 
+                        <br><br>
+                        <small>Recuerde incluir el total de 17 caracteres en el campo de búsqueda, tenga en cuenta que las
+                          letas: I, O, Q, y Ñ no son utilizadas en ningún vin.
+                        </small>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row text-muted" *ngIf="!err?.status && !vin.vins">
+                    <div class="col-lg-12 text-center">
+                      <i class="fas fa-search fa-10x"></i>
+                      <h3>buscador de vin</h3>
+                      <p>Puedes buscar un vin, incluso si este no fue asignado al código de su distribuidor. 
+                        <br><br>
+                        <small>Recuerde incluir el total de 17 caracteres en el campo de búsqueda, tenga en cuenta que las
+                          letas: I, O, Q, y Ñ no son utilizadas en ningún vin.
+                        </small>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <!-- <pre>
+                          {{vin|json}}
+                          {{err|json}}
+                        </pre> -->
+                  </div>
+                </div>
+              </div>
+        </div>
+  </div>
+</div>
+
+  
+  
+  
+  

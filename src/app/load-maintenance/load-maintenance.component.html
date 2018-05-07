@@ -1,0 +1,104 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">
+      Cargar información Mantenimientos
+    </h5>
+    <p class="card-text" *ngIf="masInfo">
+      Puede cargar un .xls siempre y cuando la estructura del archivo contenga los siguientes datos como columnas: <br>
+      <strong>Fecha Facturación:</strong> <br> Fecha de factura en formato dd/MM/YYYY. ejemplo 23/03/2018  <br>
+      <strong>No de factura / Orden de Trabajo: </strong> <br>El número de la Orden de trabajo generada en la entrada <br>
+      <strong>VIN: </strong> <br> Número de identificación vehicular de 17 caracteres, si tiene mas o menos el sistema no cargara esa fila. <br>
+      <strong>Placa: </strong> <br> Placa del vehiculo solo 6 caracteres letras y numeros. <br>
+      <strong>Kilometraje: </strong> <br> La cantidad de kilometros son puntos ni comas. <br>
+      <strong>Tipo de entrada: </strong> <br> Los tipos de entrada deben contener un prefijo de 3 a 4 letras un espacio y el kilometraje en miles, por favor tenga en cuenta la siguiente tabla, click <button class="btn btn-outline-dark btn-sm" (click)="verTabla=!verTabla"> Aquí </button> para ver la tabla <br>
+      <strong>Cod Dealer: </strong> <br> Es el código asignado por Corea CLXXX sin espacios <br>
+    </p>
+    <table class="table table-sm table-bordered" *ngIf="verTabla">
+      <thead class="thead-dark">
+        <tr>
+          <th>COD</th>
+          <th>ITEM</th>
+          <th>DESCRIPCIÓN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of tabla">
+          <td class="text-uppercase">{{t.codigo}}</td>
+          <td class="text-uppercase">{{t.item}}</td>
+          <td>{{t.desc}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-outline-primary btn-sm" (click)="masInfo=!masInfo">Más Información</button>
+    <input type="file" (change)="onFileChange($event)" multiple="false" class="btn">
+  </div>
+  <ngb-progressbar type="primary" [value]="progress" height="10px"></ngb-progressbar>
+</div>
+<br>
+<div class="card bg-secondary text-white" *ngIf="error[0]">
+  <div class="card-body">
+    <h5 class="card-title">Se encontraron los siguientes errores</h5>
+    <p>
+      <span *ngFor="let e of error">
+        <strong>Error: {{e.date}}</strong> En fila: {{e.index}} <span>Mensaje: {{e.msg}}</span> <br>
+      </span>
+    </p>
+  </div>
+</div> <br>
+<div class="card" *ngIf="dataToUpload[0]">
+  <div class="card-body">
+    <h5 class="card-title">
+      Por favor Click sobre Cargar Datos
+    </h5>
+    <p class="card-text" *ngIf="msg[0]">
+      Se han procesado {{msg.length}} registros de {{dataToUpload.length}}
+    </p>
+    <p *ngIf="seeDetails">
+      <span class="badge badge-light" *ngFor="let m of msg">{{m.msg}} </span>
+    </p>
+    <button class="btn btn-primary btn-sm" (click)="saveData()">Cargar Datos</button>
+    <button class="btn btn-outline-secondary btn-sm" (click)="seeDetails=!seeDetails">Ver detalles</button>
+  </div>
+  <ngb-progressbar type="primary" [value]="progressTwo" [max]="dataToUpload.length"></ngb-progressbar>
+</div>
+<br>
+<div class="table-responsive" *ngIf="dataToUpload[0]">
+  <table class="table table-bordered" *ngIf="dataToUpload[0]">
+    <thead>
+      <tr>
+        <th>Fecha Factura</th>
+        <th>No de Factura</th>
+        <th>VIN</th>
+        <th>Placa</th>
+        <th>Kilometraje</th>
+        <th>Tipo Entrada</th>
+        <th>Cod Dealer</th>
+        <th>Check</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of dataToUpload; let i=index">
+        <!-- <td *ngIf="(i>((page-1)*10))">{{i}} <span>{{d.bill_number}}</span></td> -->
+        <td *ngIf="(i<10*page)&&((i>(10*page)-10)||(i==(10*page)-10))">
+          <span *ngIf="d.bill_date">{{d.bill_date}}</span>
+          <span *ngIf="!d.bill_date">Invalid Date</span>
+        </td>
+        <td *ngIf="(i<10*page)&&((i>(10*page)-10)||(i==(10*page)-10))">{{d.bill_number}}</td>
+        <td *ngIf="(i<10*page)&&((i>(10*page)-10)||(i==(10*page)-10))">{{d.vin}}</td>
+        <td *ngIf="(i<10*page)&&((i>(10*page)-10)||(i==(10*page)-10))">{{d.plate}}</td>
+        <td *ngIf="(i<10*page)&&((i>(10*page)-10)||(i==(10*page)-10))">{{d.kilometers}}</td>
+        <td *ngIf="(i<10*page)&&((i>(10*page)-10)||(i==(10*page)-10))">{{d.typeIn}}</td>
+        <td *ngIf="(i<10*page)&&((i>(10*page)-10)||(i==(10*page)-10))">{{d.dealer_cod}}</td>
+        <td *ngIf="(i<10*page)&&((i>(10*page)-10)||(i==(10*page)-10))" class="text-center" >
+          <span *ngIf="d.check" class="text-success">
+            <i class="fas fa-check-circle"></i>
+          </span>
+          <span *ngIf="!d.check" class="text-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page"></ngb-pagination>
+</div>

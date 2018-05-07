@@ -1,0 +1,190 @@
+<div class="row" *ngIf="pieChart">
+  <div class="col-lg-7 col-md-7">
+      <div class="card">
+          <div class="card-body">
+            <p class="card-title">Clinica de Servicio Information
+              <small class="float-right text-secondary badge">{{clinic.createUp|date:'d MMMM y h:mm a'}}</small>
+            </p>
+            <h4 class="card-title">{{clinic.title}} <br>
+              <small class="text-uppercase"> 
+                <span class="badge badge-primary">Cod.</span>
+               {{clinic.cod}} </small>
+            </h4> 
+            
+            <br>
+            
+            <h6 class="card-subtitle mb-2 text-muted text-justify">{{clinic.description}}</h6> <br>
+            <p><Strong>Detalles</Strong></p>
+        
+            <dl class="row">
+              <dt class="col-lg-3 col-md-3"> Fecha inicio </dt>
+              <dd class="col-lg-9 col-md-9"> {{clinic.from_date |date:'d MMMM y h:mm a'}} </dd>
+        
+              <dt class="col-lg-3 col-md-3"> Fecha Final </dt>
+              <dd class="col-lg-9 col-md-9"> {{clinic.to_date |date:'d MMMM y h:mm a'}} </dd>
+        
+              <dt class="col-lg-3 col-md-3"> Presupuesto </dt>
+              <dd class="col-lg-9 col-md-9"> {{clinic.estimated_cost |currency:'$':0}} </dd>
+        
+              <dt class="col-lg-3 col-md-3"> Estatus </dt>
+              <dd class="col-lg-9 col-md-9">
+                <span [ngClass]="{'badge':true, 'badge-primary':clinic.active, 'badge-secondary':!clinic.active}">
+                  <i [ngClass]="{'fas fa-1x':true, 'fa-volume-up':clinic.active, 'fa-volume-off':!clinic.active }"></i>
+                  <span *ngIf="clinic.active">Activa</span>
+                  <span *ngIf="!clinic.active">Inactiva</span>
+                </span>
+              </dd>
+        
+              <dt class="col-lg-3 col-md-3"> Creada por </dt>
+              <dd class="col-lg-9 col-md-9 text-capitalize" *ngIf="clinic.user"><span>[{{clinic?.user[0].role}}]</span> {{clinic?.user[0].name}} </dd>
+            </dl>
+        
+            <p> <strong>Servicios Incluidos</strong> </p>
+            <dl class="row" *ngFor="let s of clinic.serviceInclude; let x=index">
+              <dt class="col-lg-3 col-md-3">Item {{x+1}}</dt>
+              <dd class="col-lg-9 col-md-9">{{s.service}}</dd>
+            </dl>
+          </div>
+        </div>
+  </div> <br>
+  <div class="col-lg-5 col-md-5" *ngIf="resume[0]">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            Resumen 
+          </h5>
+          <div>
+            <h5 class="display-4 text-center">{{resume[0]?.total}} <small class="text-muted">{{(resume[0]?.mo + resume[0]?.repuestos)/resume[0]?.total | currency:'$ '}}</small> </h5>
+            <small class="text-center">Total visitas / Promedio Cotizaciones</small>
+              <!-- <p *ngIf="resume">Total visitas: {{registers.length}}</p>
+              <p *ngIf="resume">Costo tráfico: {{clinic.estimated_cost/registers.length|currency:'$ '}}</p>
+              <p *ngIf="resume">Cotizado M.O.: {{resume[0]?.mo|currency:'$ '}}</p>
+              <p *ngIf="resume">Cotizado Repuestos: {{resume[0]?.repuestos|currency:'$ '}} </p>
+              <p *ngIf="resume">Total Cotizado: {{resume[0]?.mo + resume[0]?.repuestos|currency:'$ '}}</p>
+              <p *ngIf="resume">Promedio Cotizado Por cliente: </p> -->
+          </div>
+        </div>
+      </div> <br>
+      <div class="card" *ngIf="pieChart[0]">
+        <div class="card-body">
+          <h5 class="card-title">Total Cotizado</h5>
+          <ngx-charts-pie-chart 
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="pieChart"
+          [legend]="false"
+          [explodeSlices]="explodeSlices"
+          [labels]="showLabels"
+          [doughnut]="doughnut"
+          [gradient]="gradient"
+          (select)="onSelect($event)"></ngx-charts-pie-chart>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5 col-md-5" *ngIf="!resume[0]">
+        <div class="card">
+          <div class="card-body text-center text-muted">
+            <i class="fas fa-chart-pie fa-10x"></i>
+            <h3>Aún no hay datos</h3>
+            <p>Si cree que ya debería aparecer información aquí por favor actualice la página.
+              <br><br>
+              <small>
+                Las Clinicas de servicio sólo podrán recibir registros entre la fecha de inicio y la fecha final
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+</div>
+
+ <br>
+<div class="row">
+  <div class="col-lg-6" *ngIf="registerByGroup[0]">
+    <div class="card">
+      <div class="card-body">
+        <p class=""><strong>Cantidad de visitas por grupo</strong></p>
+          <ngx-charts-bar-vertical
+          [scheme]="colorBarScheme"
+          [results]="registerByGroup"
+          [gradient]="gradient"
+          [xAxis]="true"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6" *ngIf="detailByGroup[0]">
+    <div class="card">
+      <div class="card-body">
+        <p><strong>Detalle por grupo</strong></p>
+        <ngx-charts-bar-vertical-2d
+          [scheme]="colorBarScheme"
+          [results]="detailByGroup"
+          [gradient]="gradient"
+          [xAxis]="true"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="true"
+          [yAxisLabel]="true"
+          (select)="onSelect($event)">
+
+        </ngx-charts-bar-vertical-2d>
+      </div>
+    </div>
+  </div>
+</div> <br>
+
+<div class="row" *ngIf="registers[0]">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="card-body">
+              <p> 
+                <strong>Reporte de visitas</strong> 
+                <small class="text-muted">mostrando {{registers.length}} de {{resume[0]?.total}}</small>
+              </p>
+    
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>VIN</th>
+                      <th>Placa</th>
+                      <th>M.O.</th>
+                      <th>Repuestos</th>
+                      <th>Date</th>
+                      <th>Grupo</th>
+                      <th>Dealer</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let r of registers">
+                      <td>
+                        <span *ngIf="r.vin">{{r.vin}}</span>
+                        <span *ngIf="!r.vin" ngbTooltip="No disponible">
+                          <i class="fas fa-car"></i>
+                        </span>
+                      </td>
+                      <td class="text-uppercase" >{{r.placa}}</td>
+                      <td>{{r.mo|currency:'$ '}}</td>
+                      <td>{{r.repuestos|currency:'$ '}}</td>
+                      <td>{{r.createUp|date:'d MM y h:mm:ss a'}}</td>
+                      <td>{{r.group}}</td>
+                      <td>{{r.cl}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <ngb-pagination [collectionSize]="resume[0]?.total" [(page)]="search.page"  [maxSize]="search.maxSize" aria-label="Default pagination" (pageChange)="getReqFromClinics($event)" ></ngb-pagination>
+              </div>
+          </div>
+        </div>
+      </div>
+</div>
+

@@ -1,0 +1,42 @@
+.badge-ok{
+    color: #fff;
+    background-color: #77F186;
+}
+.badge-pronto{
+    color: #fff;
+    background-color: #F9EA2B;
+}
+.badge-urgente{
+    color: #fff;
+    background-color: #FA98AD;
+}
+.text-ok{
+    color:#77F186;
+}
+.text-pronto{
+    color:#F9EA2B;
+}
+.text-urgente{
+    color: #FA98AD;
+}
+.no-border{
+    border: none !important;
+    /* max-height: 200px !important; */
+}
+.vertical-text{
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);   
+}
+.text-sm{
+    font-size: 0.5rem
+}
+a {
+    cursor: pointer;
+}
+.text-sm{
+    font-size: 1ch
+}

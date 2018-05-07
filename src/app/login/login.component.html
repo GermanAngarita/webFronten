@@ -1,0 +1,81 @@
+<!-- <br><br><br>
+<div class="row align-items-center">
+    <div class="col">
+     
+    </div>
+    <div class="col">
+        <div class="text-center">
+            <img src="../../assets/lg_kia.png" alt="">
+        </div>
+        <div class="form-group">
+            <label for="">Email</label>
+            <input type="email" placeholder="Email" class="form-control form-control-sm">
+          </div>
+          <div class="form-group">
+            <label for="">Contraseña</label>
+            <input type="password" placeholder="Contraseña" class="form-control form-control-sm">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" (click)="login()">
+              Ingresar
+            </button>
+          </div>
+    </div>
+    <div class="col">
+    </div>
+  </div> -->
+
+  <body class="my-login-page">
+    <section class="h-100">
+      <div class="container h-100">
+        <div class="row justify-content-md-center h-100">
+          <div class="card-wrapper">
+            <div class="brand">
+              <!-- <img src="../../assets/lg_kia.png"> -->
+            </div>
+            <div class="card fat">
+              <div class="card-body">
+                <h4 class="card-title">[KASC] <small>Kia After Sales Consulting</small></h4>
+                <!-- <form method="POST"> -->
+                 
+                  <div class="form-group">
+                    <label for="email">E-Mail Address</label>
+                    <input [(ngModel)]="user.email" type="email" class="form-control" placeholder="E-Mail Address" required autofocus>
+                  </div>
+  
+                  <div class="form-group">
+                    <label for="password">Password
+                      <a class="float-right" (click)="getNewPass()">
+                        Forgot Password?
+                      </a>
+                    </label>
+                    <input  [(ngModel)]="user.password" type="password" class="form-control" required data-eye placeholder="Password" >
+                  </div>
+  
+                  <div class="form-group">
+                    <label>
+                      <input type="checkbox" name="remember"> Remember Me
+                    </label>
+                  </div>
+  
+                  <div class="form-group no-margin">
+                    <ngb-alert type="warning" (close)="closeAlert()" *ngIf="message?.error?.message">
+                      {{message.error.message}}
+                    </ngb-alert>
+                    <button (click)="singIn()" class="btn btn-primary btn-block">
+                      Login
+                    </button>
+                  </div>
+                  <div class="margin-top20 text-center">
+                    Don't have an account? <a href="register.html">Create One</a>
+                  </div>
+              </div>
+            </div>
+            <div class="footer">
+              Copyright &copy; 2018 &mdash; METROKIA IMPORTADORA POSVENTA
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>

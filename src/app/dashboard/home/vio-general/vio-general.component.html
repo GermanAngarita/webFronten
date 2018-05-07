@@ -1,0 +1,122 @@
+<div class="card">
+  <div class="card-body">
+      <h5 class="card-title text-uppercase">
+      <span class="text-danger">
+          <strong>GENERAL</strong>
+      </span> Billed Units <small></small>
+      <small class="float-right text-muted">{{today| date:'EEEE, dd MMMM y'}}</small>
+      </h5>
+      <div *ngIf="vFilterDealer">
+          <div class="row" *ngFor="let z of dealers" >
+              <div class="col-lg-12">
+                  <strong class="text-uppercase">
+                          {{z._id}} 
+                  </strong>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                  <div class="form-check">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="z.select" (change)="setFilterZone()">
+                      <label for="" class="form-check-label">Select All Zone</label>
+                  </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" *ngFor="let c of z.cl">
+                  <div class="form-check">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="c.select" (change)="setFilterDealer()">
+                      <label for="" class="form-check-label">{{c.cl}}</label>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div *ngIf="vFilterYear">
+          <div class="row">
+              <div class="col-lg-12">
+                  <hr>
+                  <strong>Filter by year</strong>
+              </div>
+              <div class="col-lg-3">
+                  <div class="form-check">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="selectAllYear" (change)="setFilterAllYear(selectAllYear)">
+                      <label for="" class="form-check-label">Select All Years</label>
+                  </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" *ngFor="let y of year">
+                  <div class="form-check">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="y.select" (change)="setFilterYear()">
+                      <label for="" class="form-check-label">{{y.year}}</label>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div *ngIf="vFilterModel">
+          <div class="row">
+              <div class="col-lg-12">
+                  <hr>
+                  <strong>Filter by Model</strong>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                  <div class="form-check">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="selectAllModel" (change)="setFilterAllModel(selectAllModel)">
+                      <label for="" class="form-check-label">Select All Model</label>
+                  </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" *ngFor="let m of model">
+                  <div class="form-check">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="m.select" (change)="setFilterModel()">
+                      <label for="" class="form-check-label">{{m.model}}</label>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+      
+      
+      
+  
+       <br>
+      <div class="row">
+          <div class="col">
+              <button class="btn btn-sm btn-outline-secondary" (click)="vFilterDealer=!vFilterDealer">Filter by Dealer</button>
+              <button class="btn btn-sm btn-outline-secondary" (click)="vFilterYear=!vFilterYear">Filter by Year</button>
+              <button class="btn btn-sm btn-outline-secondary" (click)="vFilterModel=!vFilterModel">Filter by Model</button>
+              <button class="btn btn-sm btn-outline-primary" (click)="getData()">Generate Report</button>
+          </div>
+      </div>
+      
+  </div>
+  </div> <br>
+<!-- <ngx-charts-bar-vertical-2d
+[scheme]="colorScheme"
+[results]="getByBillDate"
+></ngx-charts-bar-vertical-2d> -->
+<div *ngIf="getByBillDate">
+  <div *ngFor="let d of getByBillDate">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+                {{'Year '+d?.name}}
+                <small><span class="badge badge-info">Total: {{d?.total|currency:' ':0}}</span></small>
+                <small><span class="badge badge-warning">Average: {{d?.average|currency:' ':0}}</span></small>
+            </h5>
+              <ngx-charts-bar-vertical
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="d?.series"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="'Months of year '+d?.name"
+              [yAxisLabel]="yAxisLabel"
+              (select)="onSelect($event)">
+              </ngx-charts-bar-vertical>
+          </div>
+        </div> 
+      </div>
+    </div>  
+    <br>
+  </div>
+</div>

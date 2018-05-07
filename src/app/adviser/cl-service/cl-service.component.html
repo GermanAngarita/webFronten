@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col">
+    <div class="card bg-ligth" *ngFor="let c of clinics">
+      <div class="card-body text-center">
+        <small class="card-text">
+          <span>Active Clinic</span>
+          
+        </small>
+        <h5 class="card-title">{{c.title}}</h5>
+        <p class="card-text">{{c.description}}</p>
+        <p class="card-text">
+          <small class="text-muted">Vigencia:
+            del <span>{{c.from_date|date:'d MMMM y hh:mm:s'}}</span>
+            hasta <span>{{c.to_date|date:'d MMMM y hh:mm:s'}}</span>
+          </small>
+        </p>
+        <p *ngIf="c.moreInfo"> <strong>Servicios Incluidos</strong> </p>
+        <div *ngIf="c.moreInfo">
+            <dl class="row" *ngFor="let s of c.serviceInclude; let x=index">
+                <dt class="col-lg-6 col-md-6 text-right">Item {{x+1}}</dt>
+                <dd class="col-lg-6 col-md-6 text-left">{{s.service}}</dd>
+              </dl> 
+        </div>
+        <button class="btn btn-primary btn-sm" (click)="goToFormClinic(c)">register assistant</button>
+        <button class="btn btn-outline-primary btn-sm" (click)="c.moreInfo=!c.moreInfo">more info</button>
+      </div>
+    </div>
+    <div class="card " *ngIf="!clinics[0]">
+      <div class="card-body">
+        <div class="row text-muted" >
+          <div class="col-lg-12 text-center">
+            <i class="fas fa-sticky-note fa-10x"></i>
+            <h3>No hay Clinicas de servicio activas</h3>
+            <p>Si cree que debe haber una Clinica de servicio activa comuníquese con el administrador
+              <br><br>
+              <small>
+                Recuerde que las clinicas de servicio estarán disponibles para los asesores desde la fecha de inicio y cerraran hasta la fecha final, esto hace que los asesores solo puedan registrar las visitas mientras que la clinica de servicio permanezca activa
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <pre>{{clinics|json}}</pre> -->

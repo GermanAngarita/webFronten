@@ -1,0 +1,176 @@
+<div class="row">
+  <div class="col">
+      <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              Clinic General Report
+            </h5>
+            <div class="row">
+              <div class="col">
+                    <div class="form-group">
+                      <label for="">Desde</label> <br>
+                      <div class="input-group input-group-sm">
+                        <input type="text" class="form-control form-control-sm" name="dp" [(ngModel)]="fDate" ngbDatepicker #da="ngbDatepicker" placeholder="yyyy-mm-dd">
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" (click)="da.toggle()" type="button">
+                            <i class="fas fa-calendar-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              <div class="col">
+                      <div class="form-group">
+                        <label for="">Hasta</label> <br>
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control form-control-sm" name="dp" [(ngModel)]="tDate" ngbDatepicker #db="ngbDatepicker" placeholder="yyyy-mm-dd">
+                          <div class="input-group-append">
+                            <button class="btn btn-primary" (click)="db.toggle()" type="button">
+                              <i class="fas fa-calendar-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label for="">Grupo</label>
+                    <select name="" id="" class="form-control form-control-sm" [(ngModel)]="dealerSelect" >
+                      <option value="all">All groups</option>
+                      <option value="{{dg.group}}" *ngFor="let dg of dealerGroup">{{dg.group}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col">
+                  
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="btn btn-primary btn-sm" (click)="setFilter()">Generar reporte</button>
+                    <button class="btn-outline-primary btn-sm">Ver filtros</button>
+                </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</div> <br>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card" *ngIf="clinicResume[0]">
+      <div class="card-body">
+        <h5 class="card-title">Visitas generadas</h5>
+          <ngx-charts-advanced-pie-chart
+          [scheme]="AdvancedPieChart"
+          [results]="clinicResume"
+          [gradient]="false"
+          (select)="onSelect($event)">
+          </ngx-charts-advanced-pie-chart>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6" >
+    <div class="card" *ngIf="clinicCot[0]">
+      <div class="card-body">
+        <h5 class="card-title">Cotizaciones
+          <small> 
+            <span class="badge badge-primary">AVG REPTOS</span> {{clinicCot[0].avg|currency:"":2}} 
+            <span class="badge badge-primary">AVG M.O.</span> {{clinicCot[1].avg_mo|currency:"":2}}
+          </small>
+        </h5>
+        <ngx-charts-advanced-pie-chart
+          [scheme]="AdvancedPieChart"
+          [results]="clinicCot"
+          [gradient]="false"
+          (select)="onSelect($event)">
+          </ngx-charts-advanced-pie-chart>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-lg-8" >
+    <div class="card" *ngIf="byClinic[0]">
+      <div class="card-body">
+        <h5 class="card-title">Detalle por Clinica</h5>
+
+          <ngx-charts-bar-vertical-2d
+          [scheme]="AdvancedPieChart"
+          [results]="byClinic"
+          [gradient]="gradient"
+          [xAxis]="true"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="true"
+          [yAxisLabel]="true"
+          (select)="onSelect($event)">
+        </ngx-charts-bar-vertical-2d>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">3 Mejores Clinicas</h5>
+        <div class="list-group">
+          <div *ngFor="let bc of byClinic; let i=index">
+            <a *ngIf="i<3" class=" cursor-pointer list-group-item list-group-item-action flex-column align-items-start" (click)="info(bc.id[0])">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">
+                    {{bc.name}}
+                  </h5>
+                  <small>{{i+1}}</small>
+                </div>
+                <p class="mb-1">
+                  Cuenta con {{bc.total}} registros en total
+                </p>
+                <small class="text-muted">{{bc.id.length}} dealers participaron</small>
+              </a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div><br>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+        <div class="card-body font-weight-light text-justify text-sm">
+            <strong class="text-primary">Data include: </strong> Date from: {{search.fromDate}} to
+            {{search.toDate}}, <strong>Dealers Group:</strong>
+            <span *ngFor="let d of search.group; let i=index">{{d}} <span *ngIf="search.group.length>i+1">,</span> </span>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- <pre>
+  From date: {{fDate|json}}
+</pre>
+<pre>
+  To date:  {{tDate|json}}
+</pre> -->
+<!-- <pre>
+  Delaers: {{dealerGroup|json}}
+</pre> -->
+<!-- <pre>
+  Search {{search|json}}
+</pre> -->
+<!-- <pre>
+  {{byClinic|json}}
+</pre>
+<pre>
+    ClinicCot {{clinicCot|json}}
+</pre>
+<pre>
+  ClinicResume  {{clinicResume|json}}
+</pre> -->
+
+
