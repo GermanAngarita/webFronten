@@ -1,4 +1,4 @@
-<div class="row justify-content-md-center">
+<!-- <div class="row justify-content-md-center">
     <div class="col-lg-8">
       <div class="card">
         <div class="card-body">
@@ -346,7 +346,45 @@
           </div>
       </div>
     </div>
+  </div> -->
+  <div class="container-fluid">
+    <div class="row">
+      <div [ngClass]="{'col-lg-2':!menu, 'd-none':menu}">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title text-center display-4 text-primary"><i class="far fa-user-circle"></i></h1>
+            <h5 class="card-title text-center text-capitalize">
+                {{user.name+' '+user.last_name}} <br>
+                <span> <strong>{{user.group}} </strong> {{user.role}}</span>
+            </h5>
+            <p class="card-title text-center">
+                <small >{{user.email}}</small>
+            </p>
+          </div>
+        </div> <br>
+  
+        <div class="list-group">
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" routerLink="dcsi">
+              <i class="fas fa-server"></i> DCSI
+          </a>
+        </div> <br>
+  
+        <p class="text-help text-center">
+          <strong>Powered by </strong>  Posventa Importadora | Metrokia S.A <br> <br>
+          <small>
+            <strong>Contacto Soporte</strong>
+            <strong>D</strong> Calle 224 No 9 -60
+            <strong>T</strong> +571 364 9700 ext. 1264
+            <strong>E</strong> mtkingdespos@kia.com.co
+          </small>
+        </p>
+      </div>
+      <div [ngClass]="{'col-lg-10':!menu, 'col-lg-12':menu}">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </div>
+
   
 
   

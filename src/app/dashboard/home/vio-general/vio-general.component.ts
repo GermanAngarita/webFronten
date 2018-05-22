@@ -24,6 +24,10 @@ export class VioGeneralComponent implements OnInit {
     year:[],
     model:[]
   }
+  today:any;
+  vFilterDealer:boolean;
+  vFilterYear:boolean;
+  vFilterModel:boolean;
 
   getByBillDate:any=[]
   showXAxis = true;

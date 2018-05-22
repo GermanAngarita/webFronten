@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="col">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+          <span class="text-uppercase">kacs: </span> <small>¿Qué tan satisfecho quedó el cliente con el servicio Kia?</small>
+        </h5>
+          <div class="chart">
+              <canvas id="One" #itemUno></canvas>
+              <canvas *ngIf="kacsGeneralTri[0]" id="two" #itemDos ngbTooltip="{{kacsGeneralTri[0]?.periodo}}"></canvas>
+              <canvas *ngIf="kacsGeneralTri[1]" id="three" #itemTres ngbTooltip="{{kacsGeneralTri[1]?.periodo}}"></canvas>
+              <canvas *ngIf="kacsGeneralTri[2]" id="four" #itemCuatro ngbTooltip="{{kacsGeneralTri[2]?.periodo}}"></canvas>
+          </div>
+          <p class="card-text">
+            <strong class="text-uppercase">Kacs  q24: </strong> mide el porcentaje de satisfacción de los clientes antendidos en posventa Objetivo 86%
+            <span class="tex-right float-right">
+              <span class="badge badge-primary badge-ok">&nbsp;&nbsp;</span> 100% - 86%
+              <span class="badge badge-primary badge-pronto">&nbsp;&nbsp;</span> 85,9% - 84%
+              <span class="badge badge-primary badge-urgente">&nbsp;&nbsp;</span> 83,9% - 0%
+              </span>
+          </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col">
+     <div class="card no-border">
+       <div class="card-body">
+         <div class="row">
+           <div class="col">
+             <div class="form-group">
+               <label for="">Desde</label> <br>
+               <div class="input-group input-group-sm">
+                 <input type="text" class="form-control form-control-sm" name="dp" [(ngModel)]="fDate" ngbDatepicker #da="ngbDatepicker" placeholder="yyyy-mm-dd">
+                 <div class="input-group-append">
+                   <button class="btn btn-primary" (click)="da.toggle()" type="button">
+                     <i class="fas fa-calendar-alt"></i>
+                   </button>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <div class="col">
+             <div class="form-group">
+               <label for="">Hasta</label> <br>
+               <div class="input-group input-group-sm">
+                 <input type="text" class="form-control form-control-sm" name="dp" [(ngModel)]="tDate" ngbDatepicker #db="ngbDatepicker" placeholder="yyyy-mm-dd">
+                 <div class="input-group-append">
+                   <button class="btn btn-primary" (click)="db.toggle()" type="button">
+                     <i class="fas fa-calendar-alt"></i>
+                   </button>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <!-- <div class="col"></div> -->
+           <div class="col">
+             <label for="">Grupo</label>
+             <select name="" id="" class="form-control form-control-sm" [(ngModel)]="dealerSelect" >
+               <option value="all">ALL GROUP</option>
+               <option value="{{g?.group}}" *ngFor="let g of dealerByGroup">{{g?.group}}</option>
+             </select>
+           </div>
+           <div class="col">
+             <label for="">Periodos</label>
+             <select name="" id="" class="form-control form-control-sm" [(ngModel)]="periodos">
+               <option value="1">
+                 <span class="text-uppercase">Mes</span>
+               </option>
+               <option value="4">
+                 <span class="text-uppercase">Trimestre</span>
+               </option>
+               <option value="6">
+                 <span class="text-uppercase">Semestre</span>
+               </option>
+               <option value="12">
+                 <span class="tex-uppercase">Año</span>
+               </option>
+             </select>
+           </div>
+           <div class="col"></div>
+         </div>
+         <div class="row">
+           <div class="col">
+               <button class="btn btn-primary btn-sm" (click)="setFilter()">Get Data</button>
+           </div>
+         </div>
+       </div>
+     </div>
+    </div>
+  </div>
+  <section>
+    <p class="text-muted text-sm text-justify">
+      <strong class="text-uppercase">Data include:</strong> from: {{search.fromDate}} to: {{search.toDate}}, dealers: 
+    <span *ngFor="let i of search.group; let j=index">{{i}} <span *ngIf="j<search.group.length -1">,</span> </span>
+      <br> Posventa Importadora | <strong>Metrokia S.A</strong>
+    </p>
+  </section>
+
+
+<ng-template #msg let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+      {{messages.title}}
+    </h4>
+    <button type="button" class="close" aria-label="close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>{{messages.msg}}</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light" (click)="c('Close click')">Lo siento</button>
+    <button class="btn btn-primary" (click)="c('Close click')">Ok</button>
+  </div>
+</ng-template>

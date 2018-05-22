@@ -1,0 +1,39 @@
+.chart{
+    /* width: 1070px;
+    height:350; */
+    margin: auto;
+}
+.no-border{
+    border: none !important;
+    /* max-height: 200px !important; */
+}
+
+#sixteen,#seventeen,#eighteen{
+    width: 100%;
+    height: 20px;
+    margin: auto;
+    padding-left: 2.3%;
+    padding-right: 0.5%;
+    /* border: 1px solid #000000; */
+}
+.text-ok{
+    color:#77F186;
+}
+.text-pronto{
+    color:#F9EA2B;
+}
+.text-urgente{
+    color: #FA98AD;
+}
+.badge-ok{
+    color: #fff;
+    background-color: #77F186;
+}
+.badge-pronto{
+    color: #fff;
+    background-color: #F9EA2B;
+}
+.badge-urgente{
+    color: #fff;
+    background-color: #FA98AD;
+}

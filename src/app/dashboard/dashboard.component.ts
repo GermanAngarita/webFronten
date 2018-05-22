@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
 
-  private user = JSON.parse(localStorage.getItem('user'));
+  public user = JSON.parse(localStorage.getItem('user'));
   constructor( private router:Router) { }
 
   

@@ -65,7 +65,6 @@
                 Indicadores de Satisfacción <small>KACS, Lealtad y FRFT</small>
               </h5>
                 <combo-chart-component
-                class="chart-container"
                 [view]="view"
                 [scheme]="comboBarScheme"
                 [colorSchemeLine]="lineChartScheme"
@@ -78,9 +77,9 @@
                 [yRightAxisScaleFactor]="yRightAxisScale"
                 [yRightAxisTickFormatting]="yRightTickFormat"
                 [gradient]="true"
-                [xAxis]="showXAxis"
+                [xAxis]="'showXAxis'"
                 [yAxis]="showYAxis"
-                [legend]="true"
+                [legend]="false"
                 [legendTitle]="legendTitle"
                 [showGridLines]="showGridLines"
                 [showXAxisLabel]="showXAxisLabel"
@@ -88,7 +87,7 @@
                 [showRightYAxisLabel]="showYAxisLabel"
                 [xAxisLabel]="xAxisLabel"
                 [yAxisLabel]="yAxisLabel"
-                [yAxisLabelRight]="yAxisLabelRight"      
+                [yAxisLabelRight]="yAxisLabelRight"
                 (select)="onSelect($event)">
               </combo-chart-component>
             </div>
@@ -96,6 +95,11 @@
         </div>
       </div>
       <div class="row" *ngIf="kascGeneral[0] && indicatorSat[0]">
+        <div class="col-12">
+            <p class="card-text">
+                <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+            </p>
+        </div>
         <div class="col">
           <div class="card no-border" >
             <div class="card-body">
@@ -193,6 +197,7 @@
                 [xAxis]="showXAxis"
                 [yAxis]="showYAxis"
                 [legend]="showLegend"
+                [showDataLabel]="true"
                 [showXAxisLabel]="showXAxisLabel"
                 [showYAxisLabel]="showYAxisLabel"
                 [xAxisLabel]="xAxisLabel"
@@ -204,6 +209,11 @@
         </div>
       </div> 
       <div class="row" *ngIf="kascDealer?.kasc">
+          <div class="col-12">
+              <p class="card-text">
+                  <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+              </p>
+          </div>
         <div class="col">
           <div class="card no-border">
             <div class="card-body">
@@ -257,6 +267,7 @@
               [xAxis]="showXAxis"
               [yAxis]="showYAxis"
               [legend]="true"
+              [showGridLines]="false"
               [roundDomains]="true"
               [showXAxisLabel]="showXAxisLabel"
               [showYAxisLabel]="showYAxisLabel"
@@ -266,6 +277,11 @@
               [curve]="curve"
               (select)="onSelect($event)">
             </ngx-charts-line-chart>
+            </div>
+            <div class="col-12">
+                <p class="card-text">
+                    <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+                </p>
             </div>
           </div>
         </div>
@@ -279,7 +295,9 @@
               <ngx-charts-bar-vertical
                 [view]="view"
                 [results]="loyaltyByDealer.data"
+                [showDataLabel]="true"
                 [gradient]="gradient"
+                [showDataLabel]="true"
                 [customColors]="loyaltyByDealer.colors"
                 [xAxis]="showXAxis"
                 [yAxis]="showYAxis"
@@ -287,7 +305,7 @@
                 [showXAxisLabel]="showXAxisLabel"
                 [showYAxisLabel]="showYAxisLabel"
                 [xAxisLabel]="xAxisLabel"
-                [yAxisLabel]="'Lealtad %'"
+                [yAxisLabel]="'LEALTAD %'"
                 (select)="onSelect($event)">
               </ngx-charts-bar-vertical>
             </div>
@@ -295,6 +313,11 @@
         </div>
       </div>
       <div class="row" *ngIf="loyaltyByDealer.data">
+          <div class="col-12">
+              <p class="card-text">
+                  <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+              </p>
+          </div>
         <div class="col">
           <div class="card no-border">
             <div class="card-body">
@@ -364,7 +387,7 @@
               [legendTitle]="legendTitle"
               [showXAxisLabel]="showXAxisLabel"
               (legendLabelClick)="onLegendLabelClick($event)"
-              [showYAxisLabel]="showYAxisLabel"
+              [showYAxisLabel]="false"
               [xAxisLabel]="xAxisLabel"
               [yAxisLabel]="yAxisLabel"
               [showGridLines]="showGridLines"
@@ -377,6 +400,11 @@
         </div>
       </div>
       <div class="row" *ngIf="kascDetails[0]">
+          <div class="col-12">
+              <p class="card-text">
+                  <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+              </p>
+          </div>
         <div class="col">
           <div class="card no-border">
             <div class="card-body">
@@ -413,7 +441,7 @@
               [legendTitle]="legendTitle"
               [showXAxisLabel]="showXAxisLabel"
               (legendLabelClick)="onLegendLabelClick($event)"
-              [showYAxisLabel]="showYAxisLabel"
+              [showYAxisLabel]="false"
               [xAxisLabel]="xAxisLabel"
               [yAxisLabel]="yAxisLabel"
               [showGridLines]="showGridLines"
@@ -426,6 +454,11 @@
         </div>
       </div>
       <div class="row" *ngIf="revisitDetails[0]">
+          <div class="col-12">
+              <p class="card-text">
+                  <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+              </p>
+          </div>
         <div class="col">
           <div class="card no-border">
             <div class="card-body">
@@ -462,7 +495,7 @@
               [legendTitle]="legendTitle"
               [showXAxisLabel]="showXAxisLabel"
               (legendLabelClick)="onLegendLabelClick($event)"
-              [showYAxisLabel]="showYAxisLabel"
+              [showYAxisLabel]="false"
               [xAxisLabel]="xAxisLabel"
               [yAxisLabel]="yAxisLabel"
               [showGridLines]="showGridLines"
@@ -475,6 +508,11 @@
         </div>
       </div>
       <div class="row" *ngIf="recommend[0]">
+        <div class="col-12">
+            <p class="card-text">
+                <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+            </p>
+        </div>
         <div class="col">
           <div class="card no-border">
             <div class="card-body">
@@ -499,6 +537,7 @@
               </h5>
               <ngx-charts-bar-vertical
               [view]="view"
+              [showDataLabel]="true"
               [scheme]="normalizeColor"
               [schemeType]="schemeType"
               [customColors]="loyaltyColor"
@@ -513,7 +552,7 @@
               [showYAxisLabel]="showYAxisLabel"
               [tooltipDisabled]="tooltipDisabled"
               [xAxisLabel]="xAxisLabel"
-              [yAxisLabel]="'% Loyalty'"
+              [yAxisLabel]="'% LEALTA'"
               [showGridLines]="showGridLines"
               [barPadding]="barPaddingNormalize"
               [roundDomains]="roundDomains"
@@ -527,6 +566,11 @@
         </div>
       </div>
       <div class="row" *ngIf="indicatorSat[1]?.series">
+      <div class="col-12">
+          <p class="card-text">
+              <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+          </p>
+      </div>
         <div class="col">
           <div class="card no-border">
             <div class="card-body">
@@ -550,6 +594,7 @@
           <h5 class="card-title">FRFT: First repair first time</h5>
           <ngx-charts-bar-vertical
             [view]="view"
+            [showDataLabel]="true"
             [results]="frftByDealer.data"
             [gradient]="gradient"
             [customColors]="frftByDealer.color"
@@ -567,6 +612,11 @@
     </div>
   </div>
   <div class="row"  *ngIf="frftByDealer?.data">
+      <div class="col-12">
+          <p class="card-text">
+              <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+          </p>
+      </div>
     <div class="col">
       <div class="card no-border">
         <div class="card-body">
@@ -620,6 +670,7 @@
         </h5>
         <ngx-charts-bar-vertical-2d
         [view]="view"
+        [showDataLabel]="true"
         [scheme]="lineChartScheme"
         [results]="frftTopOffenders"
         [gradient]="gradient"
@@ -642,6 +693,11 @@
         (select)="select($event)"
         ></ngx-charts-bar-vertical-2d>
       </div>
+      <div class="col-12">
+          <p class="card-text">
+              <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+          </p>
+      </div>
     </div>
   </div>
   <br><br><br><br><br><br>
@@ -653,6 +709,8 @@
         </h5>
         <ngx-charts-bar-vertical
             [view]="view"
+
+            [showDataLabel]="true"
             [results]="frftByPer.data"
             [gradient]="gradient"
             [customColors]="frftByPer.color"
@@ -667,6 +725,11 @@
             (select)="onSelect($event)">
           </ngx-charts-bar-vertical>
       </div>
+      <div class="col-12">
+          <p class="card-text">
+              <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+          </p>
+      </div>
     </div>
   </div>
   <br> <br><br><br><br><br>
@@ -679,6 +742,8 @@
           </h5>
           <ngx-charts-bar-vertical
             [view]="view"
+
+            [showDataLabel]="true"
             [results]="frftOffenders"
             [gradient]="gradient"
             [scheme]="OneColor"
@@ -693,6 +758,11 @@
             (select)="onSelect($event)">
           </ngx-charts-bar-vertical>
         </div>
+        <div class="col-12">
+            <p class="card-text">
+                <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+            </p>
+        </div>
       </div>
     </div>
   </div>
@@ -706,6 +776,8 @@
           </h5>
           <ngx-charts-bar-vertical
             [view]="view"
+
+            [showDataLabel]="true"
             [results]="dealerScore"
             [gradient]="gradient"
             [customColors]="dealerScoreColor"
@@ -724,6 +796,11 @@
     </div>
   </div>
   <div class="row">
+      <div class="col-12">
+          <p class="card-text">
+              <img src="../../../../assets/kia-flc.png" class="logo-kia-flc" alt=""> <strong>METROKIA | </strong> Posventa Importadora
+          </p>
+      </div>
     <div class="col">
       <div class="card no-border">
         <div class="card-body">

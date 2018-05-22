@@ -7,7 +7,7 @@ import { Router, ActivatedRoute, UrlTree } from '@angular/router';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  private user = JSON.parse(localStorage.getItem('user'));
+  public user = JSON.parse(localStorage.getItem('user'));
   constructor( private router:Router) { }
 
   ngOnInit() {

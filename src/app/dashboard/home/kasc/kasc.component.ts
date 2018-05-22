@@ -81,7 +81,7 @@ export class KascComponent implements OnInit {
   showXAxisLabel = false;
   xAxisLabel = 'Periodo';
   showYAxisLabel = true;
-  yAxisLabel = '% Kasc';
+  yAxisLabel = '% KACS';
   customColor = []
   curve = shape.curveNatural
 
@@ -115,7 +115,7 @@ export class KascComponent implements OnInit {
     ]
   }
   // view: any[] = [720,240]
-  view: any[] = [1070,340]
+  view: any[] = [1070,350]
   width: number = 700;
   height: number = 300;
   fitContainer: boolean = false;
@@ -166,7 +166,7 @@ export class KascComponent implements OnInit {
   getindicatorSat():void{
     this.indicatorSat = []
     this.crmService.getIndicatorSat(this.search)
-    .subscribe( indicatorSat => {this.indicatorSat = JSON.parse(indicatorSat),this.setColorSchemeLoyalty(this.indicatorSat[1].series) })
+    .subscribe( indicatorSat => {this.indicatorSat = JSON.parse(indicatorSat),this.setColorSchemeLoyalty(this.indicatorSat[1]) })
   }
   getTicketByDate(): void{
     this.ticketByDate = []
@@ -310,16 +310,18 @@ export class KascComponent implements OnInit {
   getDealerScore():void{
     this.dealerScore = []
     for(let kacs of this.kascDealer.kasc){
-      for(let loy of this.loyaltyByDealer.data){
-        for(let frft of this.frftByDealer.data){
-          if((kacs.name == loy.name) && (kacs.name  == frft.name)){
-            this.dealerScore.push({
-              name:kacs.name,
-              value:(kacs.value * 0.2)+(loy.value * 0.3)+( frft.value * 0.4 )+(100*0.1)
-            })
+      if(this.loyaltyByDealer.data){
+        for(let loy of this.loyaltyByDealer.data){
+          for(let frft of this.frftByDealer.data){
+            if((kacs.name == loy.name) && (kacs.name  == frft.name)){
+              this.dealerScore.push({
+                name:kacs.name,
+                value:(kacs.value * 0.2)+(loy.value * 0.3)+( frft.value * 0.4 )+(100*0.1)
+              })
+            }
           }
+          
         }
-        
       }
     }
     this.dealerScore.sort((a,b)=>{
@@ -431,7 +433,8 @@ export class KascComponent implements OnInit {
   yRightAxisScale(min, max){
     return {min: `${min}`, max:`${max}`}
   }
-  setColorSchemeLoyalty(data:any){
+  setColorSchemeLoyalty(d:any){
+    let data = d.series
     for(let i=0;i<data.length;i++){
       if(data[i].value > 43.9){
         this.loyaltyColor.push({

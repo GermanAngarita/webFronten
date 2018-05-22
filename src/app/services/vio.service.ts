@@ -17,6 +17,7 @@ export class VioService {
   vio: Vio[];
 
   private api = 'http://localhost:3001/api/';
+  // private api = 'https://datacenterproject.herokuapp.com/api/';
   private url = 'vio';
   private park = 'park';
   private userToken =  JSON.parse(localStorage.getItem('token'));

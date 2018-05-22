@@ -13,6 +13,10 @@ import * as moment from 'moment/moment';
 })
 export class VioUwComponent implements OnInit {
   info=[]
+  vFilterDealer:boolean;
+  vFilterYear:boolean;
+  vFilterModel:boolean;
+  vFilterWarranty:boolean;
   today = moment()
   dealers: any = []
   year: any = []

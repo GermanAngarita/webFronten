@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdviserComponent implements OnInit {
 
-  private user = JSON.parse(localStorage.getItem('user'));
+  public user = JSON.parse(localStorage.getItem('user'));
+  menu:boolean;
   constructor() { }
 
   ngOnInit() {

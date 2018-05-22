@@ -11,7 +11,8 @@ import * as moment from 'moment/moment';
   styleUrls: ['./load-maintenance.component.css']
 })
 export class LoadMaintenanceComponent implements OnInit {
-
+  masInfo:boolean;
+  verTabla:boolean;
   tabla:any= [
     {
       codigo:'case',
@@ -59,7 +60,7 @@ export class LoadMaintenanceComponent implements OnInit {
   dataToUpload: any=[];
   error: any = []
   progressTwo:number = 0
-  user:any = JSON.parse(localStorage.getItem('user'))
+  public user:any = JSON.parse(localStorage.getItem('user'))
   msg:any = [];
   total:any=[]
   page:any=0;
@@ -105,7 +106,7 @@ export class LoadMaintenanceComponent implements OnInit {
       this.progress = 90;
       this.progress = 100;
       this.progressTwo = 0;
-      this.dataValidate(this.data)
+      // this.dataValidate(this.data)
 
     };
     reader.readAsBinaryString(target.files[0]);

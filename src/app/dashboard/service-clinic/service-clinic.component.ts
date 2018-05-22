@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServiceClinicComponent implements OnInit {
 
-  private user = JSON.parse(localStorage.getItem('user'));
+  public user = JSON.parse(localStorage.getItem('user'));
+  menu:boolean;
 
   constructor() { }
 

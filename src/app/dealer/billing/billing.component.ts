@@ -10,7 +10,7 @@ import * as moment from 'moment/moment';
   styleUrls: ['./billing.component.css']
 })
 export class BillingComponent implements OnInit {
-  private user = JSON.parse(localStorage.getItem('user'));
+  public user = JSON.parse(localStorage.getItem('user'));
   dealers:any=[]
   year: any = []
   model: any = []
@@ -22,6 +22,10 @@ export class BillingComponent implements OnInit {
     model:[],
     uw:[]
   }
+  filterDealer:boolean;
+  filterYear:boolean;
+  vFilterModel:boolean;
+  vFilterWarranty:boolean
   modelDetail:any=[]
 
   ByBillPerYear:any=[]

@@ -14,6 +14,7 @@ import 'rxjs/add/operator/toPromise';
 export class UserService {
 
   private api = 'http://localhost:3001/api/';
+  // private api = 'https://datacenterproject.herokuapp.com/api/';
   private userToken =  JSON.parse(localStorage.getItem('token'));
   private headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': 'Bearer ' + this.userToken });
 
@@ -26,7 +27,8 @@ export class UserService {
   }
 
   singIn(user:any): Observable<any> {
-    return this.http.post(this.api+'signin', user, {headers: this.headers})
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': 'Bearer ' + 'noToken' });
+    return this.http.post(this.api+'signin', user, {headers: headers})
     .map(this.extractData)
     .catch(this.handleErrorObservable)
   }

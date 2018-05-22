@@ -11,10 +11,14 @@ import * as moment from 'moment/moment';
 })
 export class GeneralVioComponent implements OnInit {
 
-  private user = JSON.parse(localStorage.getItem('user'));
+  public user = JSON.parse(localStorage.getItem('user'));
   dealers:any=[]
   year: any = []
   model: any = []
+  filterDealer:boolean;
+  filterYear:boolean;
+  vFilterModel:boolean;
+  vFilterWarranty:boolean;
   statusWarranty: any = []
   filter: any = {
     dealer:[],

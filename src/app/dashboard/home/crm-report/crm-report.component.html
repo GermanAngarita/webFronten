@@ -1,0 +1,326 @@
+<div class="row">
+    <div class="col">
+     <div class="card">
+       <div class="card-body">
+         <h5 class="card-title">
+           <strong class="text-danger text-uppercase">
+             Resultados
+           </strong>
+           CRM
+         </h5>
+         <div class="row">
+           <div class="col">
+             <div class="form-group">
+               <label for="">Desde</label> <br>
+               <div class="input-group input-group-sm">
+                 <input type="text" class="form-control form-control-sm" name="dp" [(ngModel)]="fDate" ngbDatepicker #da="ngbDatepicker" placeholder="yyyy-mm-dd">
+                 <div class="input-group-append">
+                   <button class="btn btn-primary" (click)="da.toggle()" type="button">
+                     <i class="fas fa-calendar-alt"></i>
+                   </button>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <div class="col">
+             <div class="form-group">
+               <label for="">Hasta</label> <br>
+               <div class="input-group input-group-sm">
+                 <input type="text" class="form-control form-control-sm" name="dp" [(ngModel)]="tDate" ngbDatepicker #db="ngbDatepicker" placeholder="yyyy-mm-dd">
+                 <div class="input-group-append">
+                   <button class="btn btn-primary" (click)="db.toggle()" type="button">
+                     <i class="fas fa-calendar-alt"></i>
+                   </button>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <!-- <div class="col"></div> -->
+           <div class="col">
+             <label for="">Grupo</label>
+             <select name="" id="" class="form-control form-control-sm" [(ngModel)]="dealerSelect" >
+               <option value="all">ALL GROUP</option>
+               <option value="{{g?.group}}" *ngFor="let g of dealerByGroup">{{g?.group}}</option>
+             </select>
+           </div>
+           <div class="col"></div>
+           <div class="col"></div>
+         </div>
+   
+         <div class="row">
+           <div class="col">
+               <button class="btn btn-primary btn-sm" (click)="setFilter()">Get Data</button>
+           </div>
+         </div>
+       </div>
+     </div>
+    </div>
+   </div> <br>
+<h1>Resultados CRM</h1>
+<div class="row">
+  <div class="col">
+    <div class="card no-border">
+      <div class="card-body ">
+        <h5 class="card-title">
+          <span class="text-uppercase">
+            Indicadores de satisfacción
+          </span>
+        </h5>
+        <div class="chart">
+          <canvas id="five" #itemCinco></canvas>
+        </div>
+        <div class="row">
+          <div class="col">
+            <table class="table table-bordered table-sm">
+              <thead class="">
+                <tr class="text-uppercase bg-primary text-light">
+                  <th>
+                    <span>Periodo</span>
+                  </th>
+                  <th>
+                    <span>kacs q24</span>
+                  </th>
+                  <th>
+                    <span>Lealtad</span>
+                  </th>
+                  <th>
+                    <span>frft</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-active">
+                  <th>
+                    Objetivo
+                  </th>
+                  <th>
+                    86
+                  </th>
+                  <th>
+                    44
+                  </th>
+                  <th>
+                    95
+                  </th>
+                </tr>
+                <tr *ngFor="let per of this.kacsPerDate.labels; let i = index">
+                  <td>{{per}}</td>
+                  <td>
+                    <span [ngClass]="{'text-ok': this.kacsPerDate.values[i]>86,
+                        'text-urgente':this.kacsPerDate.values[i]<86}" >
+                        {{this.kacsPerDate.values[i]}}
+                    </span>
+                  </td>
+                  <td>
+                    <span [ngClass]="{'text-ok':this.loyaltyPerDate.values[i]>44,
+                      'text-urgente':this.loyaltyPerDate.values[i]<45}" >
+                        {{this.loyaltyPerDate.values[i]}}
+                    </span>
+                  </td>
+                  <td>
+                    <span [ngClass]="{'text-ok':this.frftPerDate.values[i]>95,
+                      'text-urgente':this.frftPerDate.values[i]<94}">
+                      {{this.frftPerDate.values[i]}}
+                    </span>
+                  </td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+          <div class="col">
+            <table class="table table-bordered table-sm">
+              <thead class="">
+                <tr class="bg-primary text-light text-uppercase">
+                  <th colspan="2" class="text-center" >Total Encuestados</th>
+                </tr>
+                <tr class="table-active">
+                  <th>Periodo</th>
+                  <th>Cantidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let per of this.loyaltyPerDate.totals; let i =index">
+                  <td>{{this.loyaltyPerDate.labels[i]}}</td>
+                  <td>{{per}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col">
+            <!-- reservado para el total de entradas -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+          <span class="text-uppercase">kacs: </span> <small>¿Qué tan satisfecho quedó el cliente con el servicio Kia?</small>
+        </h5>
+          <div class="chart">
+              <canvas id="One" #itemUno></canvas>
+              <canvas *ngIf="kacsGeneralTri[0]" id="two" #itemDos ngbTooltip="{{kacsGeneralTri[0]?.periodo}}"></canvas>
+              <canvas *ngIf="kacsGeneralTri[1]" id="three" #itemTres ngbTooltip="{{kacsGeneralTri[1]?.periodo}}"></canvas>
+              <canvas *ngIf="kacsGeneralTri[2]" id="four" #itemCuatro ngbTooltip="{{kacsGeneralTri[2]?.periodo}}"></canvas>
+          </div>
+          <p class="card-text">
+            <strong class="text-uppercase">Kacs  q24: </strong> mide el porcentaje de satisfacción de los clientes antendidos en posventa Objetivo 86%
+            <span class="tex-right float-right">
+              <span class="badge badge-primary badge-ok">&nbsp;&nbsp;</span> 100% - 86%
+              <span class="badge badge-primary badge-pronto">&nbsp;&nbsp;</span> 85,9% - 84%
+              <span class="badge badge-primary badge-urgente">&nbsp;&nbsp;</span> 83,9% - 0%
+             </span>
+          </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+          Resultados KACS
+        </h5>
+        <div class="chart">
+          <canvas id="six" #itemSeis></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+          <span class="text-uppercase">lealtad</span>
+        </h5>
+        <div class="chart">
+          <canvas id="seven" #itemSiete></canvas>
+          <!-- Meses anteriores -->
+          <canvas id="eight" #itemOcho></canvas>
+          <canvas id="nine" #itemNueve></canvas>
+          <canvas id="ten" #itemDiez></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+          <span class="text-uppercase">Satisfacción</span>
+        </h5>
+        <div class="chart">
+          <canvas id="eleven" #itemOnce></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+          <span class="text-uppercase">Intención de revisita</span>
+        </h5>
+        <div class="chart">
+            <canvas id="twelve" #itemDoce></canvas>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+          <span class="text-uppercase">Recomendaria</span>
+        </h5>
+        <div class="chart">
+          <canvas id="thirteen" #itemTrece></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+          <span class="text-uppercase">Lealtad</span>
+        </h5>
+        <div class="chart">
+          <canvas id="fourteen" #itemCatorce></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="card no-border">
+      <div class="card-body">
+        <h5 class="card-title">
+            <span class="text-uppercase">frft</span> Reparar bien a la Primera
+        </h5>
+        <div class="chart">
+          <canvas id="fifteen" #itemQuince></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer del Informe -->
+<section>
+<p class="text-muted text-sm text-justify">
+  <strong>Data include: </strong> from: {{search.fromDate}} to: {{search.toDate}}, dealers: 
+  <span *ngFor="let i of search.group; let j=index">{{i}} <span *ngIf="j<search.group.length -1">,</span> </span>
+  <br> Posventa Importadora | <strong>Metrokia S.A</strong>
+</p>
+</section>
+<!-- Notificaciones al usuario -->
+<ng-template #msg let-c="close" let-d="dismiss">
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{messages.title}}
+  </h4>
+  <button type="button" class="close" aria-label="close" (click)="d('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>{{messages.msg}}</p>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-light" (click)="c('Close click')">Lo siento</button>
+  <button class="btn btn-primary" (click)="c('Close click')">Ok</button>
+</div>
+</ng-template>
+
+<div class="jumbotron">
+  <div class="container">
+    <div class="col">
+      <pre>
+        kacsPerDate: {{kacsPerDate|json}}
+      </pre>
+    </div>
+    <div class="col">
+      <pre>
+        frftPerDate: {{frftPerDate|json}}
+      </pre>
+    </div>
+    <div class="col">
+      <pre>
+        loyaltyPerDate: {{loyaltyPerDate|json}}
+      </pre>
+    </div>
+  </div>
+</div>

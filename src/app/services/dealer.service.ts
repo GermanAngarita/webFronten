@@ -16,6 +16,7 @@ export class DealerService {
 
   dealer: Dealer[]
   private api = 'http://localhost:3001/api/';
+  // private api = 'https://datacenterproject.herokuapp.com/api/';
   private url = 'dealers';
   private userToken =  JSON.parse(localStorage.getItem('token'));
   private headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization': 'Bearer ' + this.userToken });

@@ -1,0 +1,76 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">
+      Cargar DCSI
+    </h5>
+    <button class="btn btn-sm btn-outline-primary">
+      Más Informaciòn
+    </button>
+    <input type="file" (change)="onFileChange($event)" multiple="false" class="btn">
+  </div>
+  <ngb-progressbar type="primary" [value]="progress" height="10px"></ngb-progressbar>
+</div> <br>
+<div class="card bg-secondary text-white" *ngIf="err[0]">
+  <div class="card-body">
+    <h5 class="card-title">Se encontraron los siguientes errores</h5>
+    <p>
+      <span *ngFor="let e of err">
+        <strong>Error: {{e.date}}</strong> En fila: {{e.index}} <span>Mensaje: {{e.msg}}</span> <br>
+      </span>
+    </p>
+  </div>
+</div> <br>
+<div class="card" *ngIf="dataUpLoad[0]">
+  <div class="card-body">
+    <h5 class="card-title">
+      Por favor Click sobre Cargar Datos
+    </h5>
+    <p class="card-text">
+      Se han procesado {{msg.length}} registros de {{dataUpLoad.length}}
+    </p>
+    <p *ngIf="seeDetails">
+      <span class="badge badge-light" *ngFor="let m of msg">{{m.msg}} </span>
+    </p>
+    <button class="btn btn-sm btn-primary" (click)="saveData()">Cargar Datos</button>
+    <button class="btn btn-sm btn-outline-secondary" (click)="seeDetails=!seeDetails">Ver detalles</button>
+  </div>
+  <ngb-progressbar type="primary" [value]="progressTwo" [max]="data.length"></ngb-progressbar>
+</div> <br>
+<h1 *ngIf="data">{{data.length}}</h1>
+<div class="table-responsive" *ngIf="dataUpLoad[0]">
+  <table class="table table-bordered table-sm" *ngIf="dataUpLoad[0]">
+    <thead>
+      <tr>
+        <th>Cód Encuesta</th>
+        <th>Tipo</th>
+        <th>Fecha</th>
+        <th>Cód País</th>
+        <th>Dealer</th>
+        <th>Interviewer</th>
+        <th>Customer</th>
+        <th>VIN</th>
+        <th>Category</th>
+        <th>Question</th>
+        <th>answer</th>
+        <th>asnwer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of dataUpLoad; let x=index">
+        <td *ngIf="x<10" >{{i.lead_id}}</td>
+        <td *ngIf="x<10">{{i.type}}</td>
+        <td *ngIf="x<10">{{i.date}}</td>
+        <td *ngIf="x<10">{{i.cod_country}}</td>
+        <td *ngIf="x<10">{{i.cod_dealer}}</td>
+        <td *ngIf="x<10">{{i.id_interviewer}}</td>
+        <td *ngIf="x<10">{{i.id_customer}}</td>
+        <td *ngIf="x<10">{{i.vin}}</td>
+        <td *ngIf="x<10">{{i.cod_category}}</td>
+        <td *ngIf="x<10">{{i.cod_dcsi}}</td>
+        <td *ngIf="x<10">{{i.answer}}</td>
+        <td *ngIf="x<10">{{i.answerOpen}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

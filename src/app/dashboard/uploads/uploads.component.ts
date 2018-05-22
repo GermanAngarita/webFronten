@@ -11,7 +11,8 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./uploads.component.css']
 })
 export class UploadsComponent implements OnInit {
-  
+  public user = JSON.parse(localStorage.getItem('user'));
+  menu:boolean;
   
   constructor( private route: ActivatedRoute,
     private router: Router, private vinService: VinsService) { }

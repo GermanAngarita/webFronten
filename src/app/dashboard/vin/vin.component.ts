@@ -8,10 +8,11 @@ import { VinsService } from '../../services/vins.service';
   styleUrls: ['./vin.component.css']
 })
 export class VinComponent implements OnInit {
-  private user = JSON.parse(localStorage.getItem('user'));
+  public user = JSON.parse(localStorage.getItem('user'));
   body:any = {
     vin:''
   }
+  menu:boolean;
   vin:any = []
   err:any=[]
   constructor( private vinService: VinsService) { }

@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    localStorage.clear()
+    
   }
 
   getNewPass():void {
@@ -42,23 +42,22 @@ export class LoginComponent implements OnInit {
     .subscribe( response => { 
       this.response = JSON.parse(response); 
       this.setLocalStore(response)
-      this.getUserByEmail()
     },   
                 err =>{ 
       this.message = err } )
   }
 
-  goTo(): void {
-    this.router.navigateByUrl('dashboard');
+  goTo(route:string): void {
+    this.router.navigateByUrl(route);
   }
-  login(): void {
-    this.goTo();
-  }
+  
   setLocalStore(token: any): void {
     const tokenSave = JSON.parse(token);
     localStorage.setItem('token', JSON.stringify(tokenSave.token));
+    this.getUserByEmail()
   }
   getUserByEmail():void {
+    this.getUser = []
     this.userService.getUserByEmail(this.user)
     .subscribe( getUserByEmail => {this.getUser = JSON.parse(getUserByEmail); this.handRoutes(JSON.parse(getUserByEmail))} )
     

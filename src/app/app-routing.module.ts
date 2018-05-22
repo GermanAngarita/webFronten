@@ -33,9 +33,19 @@ import { ClinicFormComponent } from './adviser/cl-service/clinic-form/clinic-for
 import { ReportClinicComponent } from './dashboard/service-clinic/report-clinic/report-clinic.component';
 import { HomeAdviserComponent } from './adviser/home-adviser/home-adviser.component';
 import { KascComponent } from './dashboard/home/kasc/kasc.component';
+import { DcsiComponent } from './dashboard/uploads/dcsi/dcsi.component';
+import { TermsComponent } from './login/terms/terms.component';
+import { CrmReportComponent } from './dashboard/home/crm-report/crm-report.component';
+import { SatisfactionSlideComponent } from './dashboard/home/satisfaction-slide/satisfaction-slide.component';
+import { KacsDealerSlideComponent } from './dashboard/home/kacs-dealer-slide/kacs-dealer-slide.component';
+import { KacsResultSlideComponent } from './dashboard/home/kacs-result-slide/kacs-result-slide.component';
+import { LoyaltyDealerSlideComponent } from './dashboard/home/loyalty-dealer-slide/loyalty-dealer-slide.component';
+import { CrmResultSlideComponent } from './dashboard/home/crm-result-slide/crm-result-slide.component';
+import { FrftDealerSlideComponent } from './dashboard/home/frft-dealer-slide/frft-dealer-slide.component';
 
 const routes: Routes= [
-  { path:'login', component: LoginComponent },
+  { path:'login', component: LoginComponent},
+  { path:'terms', component:TermsComponent},
   { path:'', redirectTo:'login', pathMatch:'full'},
   { path:'dealer', component:DealerComponent, canActivate:[AuthGuardService], children:[
     { path:'generalvio', component:GeneralVioComponent },
@@ -59,9 +69,19 @@ const routes: Routes= [
       { path:'yearModel', component: VioGeneralComponent },
       { path:'general', component: VioUwComponent },
       { path:'kasc', component:KascComponent},
-      { path:'', redirectTo:'kasc', pathMatch:'full'}
+      { path:'crmreport', component:CrmReportComponent},
+      { path:'satisfactionSlide', component:SatisfactionSlideComponent},
+      { path:'kacsDealerSlide', component:KacsDealerSlideComponent },
+      { path:'kacsResultSlide', component:KacsResultSlideComponent },
+      { path:'loyaltyDealerSlide', component:LoyaltyDealerSlideComponent },
+      { path:'crmResultSlide', component:CrmResultSlideComponent },
+      { path:'frftDealerSlide', component:FrftDealerSlideComponent },
+      { path:'', redirectTo:'kacsDealerSlide', pathMatch:'full'}
     ] },
-    { path:'upload', component: UploadsComponent },
+    { path:'upload', component: UploadsComponent, children:[
+      { path:'dcsi', component:DcsiComponent},
+      { path:'', redirectTo:'dcsi', pathMatch:'full'}
+    ] },
     { path:'help', component:HelpComponent },
     { path:'vin', component:VinComponent },
     { path:'serviceClinic', component:ServiceClinicComponent, children:[

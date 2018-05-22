@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgxChartsModule} from '@swimlane/ngx-charts';
 import { NgModule } from '@angular/core';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -55,6 +56,15 @@ import { HomeAdviserComponent } from './adviser/home-adviser/home-adviser.compon
 import { KascComponent } from './dashboard/home/kasc/kasc.component';
 import { CrmsurveysService } from './services/crmsurveys.service';
 import { ComboChartComponent, ComboSeriesVerticalComponent} from './dashboard/home/kasc/combo-chart';
+import { DcsiComponent } from './dashboard/uploads/dcsi/dcsi.component';
+import { TermsComponent } from './login/terms/terms.component';
+import { CrmReportComponent } from './dashboard/home/crm-report/crm-report.component';
+import { SatisfactionSlideComponent } from './dashboard/home/satisfaction-slide/satisfaction-slide.component';
+import { KacsDealerSlideComponent } from './dashboard/home/kacs-dealer-slide/kacs-dealer-slide.component';
+import { KacsResultSlideComponent } from './dashboard/home/kacs-result-slide/kacs-result-slide.component';
+import { LoyaltyDealerSlideComponent } from './dashboard/home/loyalty-dealer-slide/loyalty-dealer-slide.component';
+import { CrmResultSlideComponent } from './dashboard/home/crm-result-slide/crm-result-slide.component';
+import { FrftDealerSlideComponent } from './dashboard/home/frft-dealer-slide/frft-dealer-slide.component';
 
 
 
@@ -93,7 +103,16 @@ import { ComboChartComponent, ComboSeriesVerticalComponent} from './dashboard/ho
     HomeAdviserComponent,
     KascComponent,
     ComboChartComponent,
-    ComboSeriesVerticalComponent
+    ComboSeriesVerticalComponent,
+    DcsiComponent,
+    TermsComponent,
+    CrmReportComponent,
+    SatisfactionSlideComponent,
+    KacsDealerSlideComponent,
+    KacsResultSlideComponent,
+    LoyaltyDealerSlideComponent,
+    CrmResultSlideComponent,
+    FrftDealerSlideComponent
   ],
   imports: [
     
@@ -109,6 +128,7 @@ import { ComboChartComponent, ComboSeriesVerticalComponent} from './dashboard/ho
     
   ],
   providers: [
+    {provide:LocationStrategy, useClass:HashLocationStrategy},
     CrmsurveysService,
     ManagerGuardService,
     AuthServiceService,
